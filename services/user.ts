@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Interface
-import { IUser } from "../interace/IUser";
+import { IUser } from "../Interface/IUser";
 
 export const userApi = axios.create({
   baseURL: "http://192.168.0.110:5000/api/user",

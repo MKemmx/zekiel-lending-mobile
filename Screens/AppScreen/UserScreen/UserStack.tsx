@@ -5,7 +5,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 // User Stack Component
 import User from "./User";
 import AddUser from "./AddUser/AddUser";
-import UserData from "./UserData/UserData";
+
+// Stacks
+import UserDataStack from "./UserDataScreen/UserDataStack";
 
 // Intialize Stack
 const Stack = createNativeStackNavigator();
@@ -16,11 +18,11 @@ const UserStack = () => {
       <Stack.Screen name="User" component={User} />
       <Stack.Screen name="Add User" component={AddUser} />
       <Stack.Screen
-        name="User Data"
+        name="User Data Stack"
         options={{
-          title: "",
+          headerShown: false,
         }}
-        component={UserData}
+        component={UserDataStack}
       />
     </Stack.Navigator>
   );

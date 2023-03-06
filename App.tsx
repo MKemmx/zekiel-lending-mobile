@@ -58,67 +58,61 @@ export default function App() {
         <NavigationContainer>
           <SafeAreaView style={{ flex: 1 }} forceInset={{ bottom: "always" }}>
             {isAuthenticated ? (
-              <>
-                <FooterTab.Navigator
-                  screenOptions={{
-                    headerShown: false,
-                    tabBarActiveTintColor: "#1d3b80",
-                    tabBarHideOnKeyboard: true,
+              <FooterTab.Navigator
+                screenOptions={{
+                  headerShown: false,
+                  tabBarActiveTintColor: "#1d3b80",
+                  tabBarHideOnKeyboard: true,
+                }}
+              >
+                <FooterTab.Screen
+                  name="Home"
+                  component={HomeScreen}
+                  options={{
+                    tabBarLabel: "Home",
+                    tabBarIcon: ({ color, size }) => (
+                      <AntDesign name="home" size={size} color={color} />
+                    ),
                   }}
-                >
-                  <FooterTab.Screen
-                    name="Home"
-                    component={HomeScreen}
-                    options={{
-                      tabBarLabel: "Home",
-                      tabBarIcon: ({ color, size }) => (
-                        <AntDesign name="home" size={size} color={color} />
-                      ),
-                    }}
-                  />
+                />
 
-                  <FooterTab.Screen
-                    name="User Stack"
-                    component={UserStackScreen}
-                    options={{
-                      tabBarLabel: "User",
-                      tabBarIcon: ({ color, size }) => (
-                        <FontAwesome name="users" size={size} color={color} />
-                      ),
-                    }}
-                  />
+                <FooterTab.Screen
+                  name="User Stack"
+                  component={UserStackScreen}
+                  options={{
+                    tabBarLabel: "User",
+                    tabBarIcon: ({ color, size }) => (
+                      <FontAwesome name="users" size={size} color={color} />
+                    ),
+                  }}
+                />
 
-                  <FooterTab.Screen
-                    name="Credit Stack"
-                    component={CreditStackScreen}
-                    options={{
-                      tabBarLabel: "Credit Ledger",
-                      tabBarIcon: ({ color, size }) => (
-                        <AntDesign
-                          name="creditcard"
-                          size={size}
-                          color={color}
-                        />
-                      ),
-                    }}
-                  />
+                <FooterTab.Screen
+                  name="Credit Stack"
+                  component={CreditStackScreen}
+                  options={{
+                    tabBarLabel: "Credit Ledger",
+                    tabBarIcon: ({ color, size }) => (
+                      <AntDesign name="creditcard" size={size} color={color} />
+                    ),
+                  }}
+                />
 
-                  <FooterTab.Screen
-                    name="Setting"
-                    component={SettingsScreen}
-                    options={{
-                      tabBarLabel: "Setting",
-                      tabBarIcon: ({ color, size }) => (
-                        <Ionicons
-                          name="md-settings-outline"
-                          size={size}
-                          color={color}
-                        />
-                      ),
-                    }}
-                  />
-                </FooterTab.Navigator>
-              </>
+                <FooterTab.Screen
+                  name="Setting"
+                  component={SettingsScreen}
+                  options={{
+                    tabBarLabel: "Setting",
+                    tabBarIcon: ({ color, size }) => (
+                      <Ionicons
+                        name="md-settings-outline"
+                        size={size}
+                        color={color}
+                      />
+                    ),
+                  }}
+                />
+              </FooterTab.Navigator>
             ) : (
               <AuthStack.Navigator screenOptions={{ headerShown: false }}>
                 <AuthStack.Screen name="Login" component={Login} />

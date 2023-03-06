@@ -1,23 +1,42 @@
-import { View, Text } from "react-native";
 import React from "react";
 
 import { SafeAreaView } from "react-native-safe-area-context";
-import { VStack, Box, Container } from "native-base";
+import {
+  VStack,
+  Box,
+  Container,
+  Spacer,
+  Center,
+  Text,
+  ScrollView,
+} from "native-base";
 
 const Settings = () => {
   return (
     <SafeAreaView>
-      <View>
-        <Container mx={"auto"} justifyContent={"center"}>
-          <VStack
-            borderRadius="md"
-            style={{ backgroundColor: "red" }}
-            space="2"
-          >
-            <Box pt="4">Settings Screen</Box>
-          </VStack>
+      <VStack h="full">
+        {/* Header */}
+        <Box backgroundColor="#1d3b80" h="1/4">
+          Header
+        </Box>
+        {/* Body */}
+        <Container
+          flex={1}
+          mx="auto"
+          w="100%"
+          style={{ backgroundColor: "red" }}
+        >
+          Body
         </Container>
-      </View>
+        {/* Footer */}
+        <Box backgroundColor="white" shadow={1} h="16">
+          <Center h="100%">
+            <Text fontSize="xs" bold color="muted.500">
+              Zekiel Lending V.1
+            </Text>
+          </Center>
+        </Box>
+      </VStack>
     </SafeAreaView>
   );
 };

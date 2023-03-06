@@ -1,21 +1,19 @@
 import React from "react";
 import {
-  VStack,
   Box,
   Text,
   Avatar,
   HStack,
   Spacer,
-  FlatList,
-  Input,
-  Icon,
-  Spinner,
   View,
   Container,
   Fab,
+  Flex,
+  Stack,
 } from "native-base";
 import { RefreshControl, TouchableOpacity } from "react-native";
 import { SwipeListView } from "react-native-swipe-list-view";
+import { useNavigation } from "@react-navigation/native";
 
 // Day JS
 import dayjs from "dayjs";
@@ -32,6 +30,7 @@ import { Ionicons, FontAwesome5, AntDesign } from "@expo/vector-icons";
 import { readOneUser } from "../../../../services/user";
 
 const UserData = ({ route }: { route: any }) => {
+  const navigation = useNavigation();
   const { userId } = route.params;
 
   const { isLoading, isError, data, error, isFetching, refetch } = useQuery({
@@ -61,37 +60,131 @@ const UserData = ({ route }: { route: any }) => {
 
   return (
     <Box flex={1}>
-      <Box h="auto" backgroundColor="#1D3B80">
-        <Container
-          backgroundColor="#1D3B80"
-          h="40"
-          py={6}
-          w="100%"
-          alignItems="center"
-          mx="auto"
-        >
-          <Box>
-            <Text bold fontSize="md" textAlign="center" color="#FFF">
-              User Ledger Data
-            </Text>
+      <Box h="auto" backgroundColor="light.300">
+        <Box py={3} h="auto" w="100%" rounded="lg" flexDirection="column">
+          <Box
+            w="100%"
+            justifyContent="space-between"
+            alignItems="center"
+            flexDirection="row"
+            px={3}
+          >
+            <Box w="25%">
+              <Avatar
+                style={{
+                  borderColor: "white",
+                  borderWidth: 3,
+                }}
+                size="100px"
+                source={{
+                  uri: "http://demo.solwininfotech.com/wordpress/probit/wp-content/uploads/2015/12/Rick-Kelly.jpg",
+                }}
+              />
+            </Box>
+
+            <Box w="70%">
+              <Box
+                w="100%"
+                backgroundColor="white"
+                flexDirection="row"
+                justifyContent="space-between"
+              >
+                <Box w="50%" py={2}>
+                  <Text color="muted.700" textAlign="center" bold>
+                    {"\u20B1"}
+                    {data?.results?.totalStatus[1].totalAmount}
+                  </Text>
+                  <Text color="muted.700" textAlign="center">
+                    Total Utang
+                  </Text>
+                </Box>
+
+                <Box w="50%" py={2}>
+                  <Text color="muted.700" textAlign="center" bold>
+                    {"\u20B1"}
+                    {data?.results?.totalStatus[0].totalAmount}
+                  </Text>
+                  <Text color="muted.700" textAlign="center">
+                    Total Bayad
+                  </Text>
+                </Box>
+              </Box>
+              <Box
+                w="100%"
+                mx="auto"
+                alignItems="center"
+                justifyContent="center"
+                backgroundColor="white"
+                py={3}
+              >
+                <Text textAlign="center" bold>
+                  {"\u20B1"}
+                  {data?.results?.totalStatus[2].totalAmount}
+                </Text>
+                <Text textAlign="center"> Balance </Text>
+              </Box>
+            </Box>
           </Box>
 
-          <Box mt="12">
-            <Avatar
-              style={{
-                borderColor: "white",
-                borderWidth: 6,
-              }}
-              size="2xl"
-              source={{
-                uri: "http://demo.solwininfotech.com/wordpress/probit/wp-content/uploads/2015/12/Rick-Kelly.jpg",
-              }}
-            />
+          <Box
+            px={3}
+            justifyContent="space-between"
+            alignItems="center"
+            w="100%"
+            mt={5}
+            flexDirection={"row"}
+          >
+            <Box>
+              <Box>
+                <Text fontSize="xs" color="muted.600">
+                  Personal Info
+                </Text>
+              </Box>
+              <Stack direction="column" mb="2.5" mt="1.5" space={1}>
+                <Box flexDirection="row">
+                  <Text> Name </Text>
+                  <Text ml={1}>
+                    {data?.results?.user?.firstName}
+                    {data?.results?.user?.middleName}
+                    {data?.results?.user?.lastName}
+                  </Text>
+                </Box>
+                <Box flexDirection="row">
+                  <Text> Address </Text>
+                  <Text ml={1}>{data?.results?.user?.address}</Text>
+                </Box>
+                <Box flexDirection="row">
+                  <Text> Phone Number </Text>
+                  <Text ml={1}>{data?.results?.user?.phoneNumber}</Text>
+                </Box>
+              </Stack>
+            </Box>
+            <Box>
+              <Box>
+                <Text fontSize="xs" color="muted.600">
+                  Bank Information
+                </Text>
+              </Box>
+              <Stack direction="column" mb="2.5" mt="1.5" space={1}>
+                <Box flexDirection="row">
+                  <Text> Bank Name </Text>
+                  <Text ml={1}>{data?.results?.user?.bankName}</Text>
+                </Box>
+                <Box flexDirection="row">
+                  <Text> Account Number </Text>
+                  <Text ml={1}>{data?.results?.user?.accountNumber}</Text>
+                </Box>
+                <Box flexDirection="row">
+                  <Text> Pin Code </Text>
+                  <Text ml={1}>{data?.results?.user?.pinCode}</Text>
+                </Box>
+              </Stack>
+            </Box>
           </Box>
-        </Container>
+        </Box>
       </Box>
 
-      <Box px="5" py="2" mt="24" mb="56">
+      <Box flex={1} px="5" py="2" mt="1" mb="16">
         <SwipeListView
           useFlatList={true}
           removeClippedSubviews
@@ -216,6 +309,9 @@ const UserData = ({ route }: { route: any }) => {
         shadow={1}
         size="md"
         label="Utang"
+        onPress={() => {
+          navigation.navigate("Add Utang", { userId });
+        }}
       />
       <Fab
         // style={{ backgroundColor: "#1D3B80" }}
@@ -225,6 +321,9 @@ const UserData = ({ route }: { route: any }) => {
         shadow={1}
         size="md"
         label="Bayad"
+        onPress={() => {
+          navigation.navigate("Add Bayad", { userId });
+        }}
       />
     </Box>
   );

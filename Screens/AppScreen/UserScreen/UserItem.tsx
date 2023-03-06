@@ -167,8 +167,15 @@ const UserItem = ({ navigation }: { navigation: any }) => {
                   <HStack space={[0, 0]} justifyContent="space-between">
                     <Spacer />
                     <TouchableOpacity
+                      // onPress={() => {
+                      //   navigation.navigate("User Data", { userId });
+                      // }}
+
                       onPress={() => {
-                        navigation.navigate("User Data", { userId });
+                        navigation.navigate("User Data Stack", {
+                          screen: "User Data",
+                          params: { userId },
+                        });
                       }}
                     >
                       <View
