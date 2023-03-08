@@ -12,7 +12,7 @@ import Login from "./Screens/AuthScreen/Login";
 import Register from "./Screens/AuthScreen/Register";
 
 // APP Screens
-import HomeScreen from "./Screens/AppScreen/Home";
+import HomeScreen from "./Screens/AppScreen/HomeScreen/Home";
 import SettingsScreen from "./Screens/AppScreen/Settings";
 
 // Stack Credit

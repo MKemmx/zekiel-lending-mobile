@@ -43,7 +43,6 @@ const UserItem = ({ navigation }: { navigation: any }) => {
   } = useInfiniteQuery({
     queryKey: ["users", debouncedFilter],
     queryFn: ({ pageParam = 1 }) => {
-      console.log(debouncedFilter);
       return readUser(pageParam, debouncedFilter);
     },
     getNextPageParam: (lastPage) => {

@@ -35,7 +35,7 @@ import { readCreditLedger } from "../../../services/creditLedger";
 // Get QueryClient from the context
 const CreditItem = () => {
   const [searchText, setSearchText] = React.useState("");
-  const [debouncedFilter] = useDebounce(searchText, 500);
+  const [debouncedFilter] = useDebounce(searchText, 1000);
 
   const {
     data,
