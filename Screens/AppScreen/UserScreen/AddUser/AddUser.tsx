@@ -9,11 +9,13 @@ import {
   Box,
   useToast,
 } from "native-base";
+import { TouchableOpacity } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
 
 import { Formik } from "formik";
 import * as Yup from "yup";
+import * as ImagePicker from "expo-image-picker";
 
 // React Query
 import { useMutation, useQueryClient } from "react-query";
@@ -23,6 +25,7 @@ import { createUser } from "../../../../services/user";
 
 // Toast Component
 import Toast from "./Toast";
+import ImageViewer from "./ImageViewer";
 
 const formSchema = Yup.object().shape({
   firstName: Yup.string().required("This field is required"),
@@ -38,6 +41,7 @@ const formSchema = Yup.object().shape({
 const AddUser = () => {
   const toast = useToast();
   const navigation = useNavigation();
+
   const [initialValues, setInitialValues] = useState({
     firstName: "",
     middleName: "",
@@ -48,6 +52,20 @@ const AddUser = () => {
     accountNumber: "",
     pinCode: "",
   });
+  const [selectedImage, setSelectedImage] = useState<any | null>(null);
+
+  const pickImageAsync = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      quality: 1,
+    });
+    if (!result.canceled) {
+      const imageURI: string = result.assets[0].uri;
+      setSelectedImage(imageURI);
+    } else {
+      alert("You did not select any image.");
+    }
+  };
 
   // Query Client
   const queryClient = useQueryClient();
@@ -81,6 +99,15 @@ const AddUser = () => {
   return (
     <ScrollView w="100%">
       <Box px={3} py={5}>
+        <TouchableOpacity onPress={pickImageAsync}>
+          <Box my={2}>
+            <ImageViewer
+              placeholderImageSource={"Select Image"}
+              selectedImage={selectedImage}
+            />
+          </Box>
+        </TouchableOpacity>
+
         <Formik
           initialValues={initialValues}
           validationSchema={formSchema}
