@@ -5,7 +5,8 @@ export interface IUser {
   lastName: string;
   address: string;
   phoneNumber: string;
-  accountNumber: string;
+  accountNumber: any;
   bankName: string;
   pinCode: number;
+  image?: any;
 }

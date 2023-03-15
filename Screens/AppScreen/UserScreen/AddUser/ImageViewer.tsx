@@ -23,7 +23,7 @@ const ImageViewer: React.FC<ImageViewer> = ({ selectedImage }) => {
           alignSelf="center"
           size="2xl"
           source={{
-            uri: selectedImage,
+            uri: selectedImage.assets[0].uri,
           }}
         />
       )}

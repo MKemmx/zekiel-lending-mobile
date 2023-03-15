@@ -7,8 +7,14 @@ export const userApi = axios.create({
   baseURL: "http://192.168.0.110:5000/api/user",
 });
 
-export const createUser = async (user: IUser) => {
-  return await userApi.post("/", user);
+export const createUser = async (formData: any) => {
+  const config = {
+    headers: {
+      "content-type": "multipart/form-data",
+    },
+  };
+
+  return await userApi.post("/", formData, config);
 };
 
 export const readUser = async (page: number, searchText: string) => {
