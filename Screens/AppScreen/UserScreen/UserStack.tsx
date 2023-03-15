@@ -3,7 +3,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 // User Stack Component
-import User from "./User";
+import User from "./User/User";
 import AddUser from "./AddUser/AddUser";
 
 // Stacks

@@ -123,7 +123,6 @@ const CreditItem = () => {
                   data={creditLedgerData}
                   renderItem={({ item, index }) => {
                     const isBayad = item.status === "bayad" ? true : false;
-
                     return (
                       <Box
                         key={index}

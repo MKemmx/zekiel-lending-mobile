@@ -7,8 +7,8 @@ interface INoData {
 const NoData: React.FC<INoData> = ({ searchText }) => {
   const headerMessage = searchText ? "No search result found" : "No data";
   const subtitleMessage = searchText
-    ? " Sorry there are no results for this search"
-    : " Add your input";
+    ? "Sorry there are no results for this search"
+    : "Add your input";
 
   return (
     <Box rounded={"lg"} style={{ backgroundColor: "white" }} py={12}>

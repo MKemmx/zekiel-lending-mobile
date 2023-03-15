@@ -1,13 +1,10 @@
 import React from "react";
-
 // Nativebase
 import { Fab, Icon, Box } from "native-base";
-
 // Icons
 import { AntDesign } from "@expo/vector-icons";
-
 // Components
-import UserItem from "./UserItem";
+import UserItem from "./Children/UserItem";
 
 const User = ({ navigation }: { navigation: any }) => {
   return (
@@ -19,7 +16,6 @@ const User = ({ navigation }: { navigation: any }) => {
         renderInPortal={false}
         shadow={2}
         size="md"
-        label="Add User"
         onPress={() => {
           navigation.navigate("Add User");
         }}

@@ -16,22 +16,18 @@ import {
   CloseIcon,
 } from "native-base";
 import { TouchableOpacity } from "react-native";
-
+// React navigation
 import { useNavigation } from "@react-navigation/native";
-
+// Formik
 import { Formik } from "formik";
 import * as ImagePicker from "expo-image-picker";
-
 // React Query
 import { useMutation, useQueryClient } from "react-query";
-
 // Services
 import { createUser } from "../../../../services/user";
-
 // Toast Component
 import Toast from "./Toast";
 import ImageViewer from "./ImageViewer";
-
 // Vilidation Schema
 import { userValidationSchema } from "./ValidationShema";
 import { initialState } from "./InitialState";
@@ -39,17 +35,13 @@ import { initialState } from "./InitialState";
 const AddUser = () => {
   const toast = useToast();
   const navigation = useNavigation();
-
   const [selectedImage, setSelectedImage] = useState<any | null>(null);
-  const [initialValues, setInitialValues] = useState(initialState);
-
   const pickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       quality: 1,
     });
     if (!result.canceled) {
-      // const imageURI: string = result.assets[0].uri;
       setSelectedImage(result);
     } else {
       setSelectedImage(null);
@@ -59,7 +51,6 @@ const AddUser = () => {
 
   // Query Client
   const queryClient = useQueryClient();
-
   // User Mutation
   const createUserMuation = useMutation({
     mutationFn: createUser,
@@ -69,7 +60,14 @@ const AddUser = () => {
       toast.show({
         placement: "top",
         render: ({ id }) => {
-          return <Toast id={id} {...item} />;
+          const toastDetils = {
+            title: "Success",
+            description: "New user has been added!",
+            variant: "left-accent",
+            isClosable: true,
+            status: "success",
+          };
+          return <Toast id={id} {...toastDetils} />;
         },
       });
     },
@@ -77,23 +75,12 @@ const AddUser = () => {
       console.log(error.response.data.msg);
     },
   });
-
-  const item = {
-    title: "New Added",
-    description: "New user has been created!",
-    variant: "left-accent",
-    isClosable: true,
-  };
-
+  // Submit Data
   const handleSubmit = (values: any) => {
-    let objectData = {
-      ...values,
-    };
     const formData: any = new FormData();
-    for (let key in objectData) {
-      formData.append(key, objectData[key]);
+    for (let key in values) {
+      formData.append(key, values[key]);
     }
-
     if (selectedImage) {
       const { uri } = selectedImage.assets[0];
       formData.append("image", {
@@ -144,7 +131,7 @@ const AddUser = () => {
           </Box>
         </TouchableOpacity>
         <Formik
-          initialValues={initialValues}
+          initialValues={initialState}
           validationSchema={userValidationSchema}
           onSubmit={handleSubmit}
         >
@@ -336,9 +323,8 @@ const AddUser = () => {
                   </FormControl>
 
                   <Button
-                    isLoading={false}
+                    isLoading={createUserMuation.isLoading}
                     spinnerPlacement="end"
-                    isLoadingText="Saving..."
                     color="primary.900"
                     shadow={2}
                     onPress={() => {

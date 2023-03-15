@@ -8,9 +8,10 @@ import {
   IconButton,
   CloseIcon,
   Alert,
+  Toast,
 } from "native-base";
 
-const Toast = ({
+const ToastPopper = ({
   id,
   status,
   variant,
@@ -35,43 +36,28 @@ const Toast = ({
           <Text
             fontSize="md"
             fontWeight="medium"
+            color={"darkText"}
             flexShrink={1}
-            color={
-              variant === "solid"
-                ? "lightText"
-                : variant !== "outline"
-                ? "darkText"
-                : null
-            }
           >
             {title}
           </Text>
         </HStack>
-        {isClosable ? (
+        {isClosable && (
           <IconButton
+            onPress={() => Toast.close(id)}
             variant="unstyled"
             icon={<CloseIcon size="3" />}
             _icon={{
-              color: variant === "solid" ? "lightText" : "darkText",
+              color: "darkText",
             }}
-            // onPress={() => toast.close(id)}
           />
-        ) : null}
+        )}
       </HStack>
-      <Text
-        px="6"
-        color={
-          variant === "solid"
-            ? "lightText"
-            : variant !== "outline"
-            ? "darkText"
-            : null
-        }
-      >
+      <Text px="6" color={"darkText"}>
         {description}
       </Text>
     </VStack>
   </Alert>
 );
 
-export default Toast;
+export default ToastPopper;
