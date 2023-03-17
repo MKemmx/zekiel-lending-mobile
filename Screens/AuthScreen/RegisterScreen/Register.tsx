@@ -34,7 +34,7 @@ const Register = ({ navigation }: { navigation: any }) => {
   };
 
   return (
-    <Center backgroundColor={"white"} flex={1} px="3">
+    <Center backgroundColor={"white"} flex={1}>
       <Container w="100%">
         <Box w="100%" alignItems="center">
           <Box mb="3">
