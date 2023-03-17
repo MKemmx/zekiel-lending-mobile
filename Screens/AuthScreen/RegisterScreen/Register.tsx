@@ -12,7 +12,10 @@ import {
   Flex,
   View,
   WarningOutlineIcon,
+  Image,
+  Heading,
 } from "native-base";
+
 // API Service
 import { useMutation } from "react-query";
 import { Formik } from "formik";
@@ -31,12 +34,24 @@ const Register = ({ navigation }: { navigation: any }) => {
   };
 
   return (
-    // <View>
-    <Center flex={1} px="3">
+    <Center backgroundColor={"white"} flex={1} px="3">
       <Container w="100%">
         <Box w="100%" alignItems="center">
-          {/* Header Style */}
-          <Box></Box>
+          <Box mb="3">
+            <Image
+              rounded={"2xl"}
+              style={{ resizeMode: "contain" }}
+              source={require("../../../assets/newLogo.png")}
+              size={190}
+              alt="Logo"
+            />
+          </Box>
+
+          <Box w="100%" mb="3">
+            <Heading size="md" fontWeight="600" color="coolGray.800">
+              Register Page
+            </Heading>
+          </Box>
 
           <VStack space="3" w="100%">
             <Formik
@@ -53,7 +68,7 @@ const Register = ({ navigation }: { navigation: any }) => {
                 touched,
               }) => (
                 <View>
-                  <FormControl mb={2}>
+                  <FormControl mb={1}>
                     <FormControl
                       isInvalid={
                         errors.userName && touched.userName ? true : false
@@ -78,7 +93,7 @@ const Register = ({ navigation }: { navigation: any }) => {
                     </FormControl>
                   </FormControl>
 
-                  <FormControl mb={2}>
+                  <FormControl mb={1}>
                     <FormControl
                       isInvalid={errors.email && touched.email ? true : false}
                     >
@@ -101,7 +116,7 @@ const Register = ({ navigation }: { navigation: any }) => {
                     </FormControl>
                   </FormControl>
 
-                  <FormControl mb={2}>
+                  <FormControl mb={1}>
                     <FormControl
                       isInvalid={
                         errors.password && touched.password ? true : false
@@ -128,6 +143,7 @@ const Register = ({ navigation }: { navigation: any }) => {
 
                   <Box mt={2}>
                     <Button
+                      backgroundColor={"#1d3b80"}
                       isLoading={registerMutation.isLoading}
                       onPress={() => {
                         handleSubmit();
@@ -159,7 +175,6 @@ const Register = ({ navigation }: { navigation: any }) => {
         </Box>
       </Container>
     </Center>
-    // </View>
   );
 };
 
