@@ -7,7 +7,7 @@ import HomeHeader from "./HomeHeader";
 
 // Components
 import RecentUsers from "./Children/RecentUsers";
-import RecentUtang from "./Children/RecentUtang";
+import RecentLedger from "./Children/RecentLedger";
 
 // React Query
 import { useQuery } from "react-query";
@@ -21,7 +21,7 @@ import HomeSkeleton from "./HomeSkeleton";
 const Home = () => {
   const {
     data: dashboardData,
-    loading,
+    isLoading,
     error,
     refetch,
   } = useQuery("dashboard", readDashboard);
@@ -34,8 +34,12 @@ const Home = () => {
     setRefreshing(false);
   }, []);
 
-  if (loading) {
+  if (isLoading) {
     return <HomeSkeleton />;
+  }
+
+  if (error) {
+    console.log(error);
   }
 
   return (
@@ -90,9 +94,8 @@ const Home = () => {
               mb={2}
             />
             <Text fontSize="md" bold>
-              Total Utangs
+              Total Credit Ledgers
             </Text>
-
             <Text fontSize="md" bold>
               {dashboardData?.totalCreditLedger}
             </Text>
@@ -100,7 +103,7 @@ const Home = () => {
         </Box>
       </HStack>
       <RecentUsers />
-      <RecentUtang />
+      <RecentLedger recentLedgerData={dashboardData.recentCreditLedger} />
     </ScrollView>
   );
 };

@@ -1,29 +1,13 @@
-import { Text, Box, Image, FlatList } from "native-base";
 import React from "react";
+// Nativebase
+import { Text, Box, Image, FlatList } from "native-base";
 
 interface IItem {
-  id: string;
-  name: string;
-  imageUrl: string;
+  _id: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
 }
-
-const DATA: IItem[] = [
-  {
-    id: "1",
-    name: "Item 1",
-    imageUrl: "https://dummyimage.com/300x300/000/fff",
-  },
-  {
-    id: "2",
-    name: "Item 2",
-    imageUrl: "https://dummyimage.com/300x300/000/fff",
-  },
-  {
-    id: "3",
-    name: "Item 3",
-    imageUrl: "https://dummyimage.com/300x300/000/fff",
-  },
-];
 
 function renderItem({ item }: { item: IItem }) {
   return (
@@ -35,31 +19,31 @@ function renderItem({ item }: { item: IItem }) {
       backgroundColor="red.100"
     >
       <Image
-        alt={item?.name}
-        source={{ uri: item.imageUrl }}
+        alt={item?.firstName}
+        source={{ uri: "https://dummyimage.com/300x300/000/fff" }}
         style={{ width: 100, height: 100, borderRadius: 8 }}
       />
       <Box marginLeft={8}>
         <Text fontWeight="bold" fontSize={16}>
-          {item.name}
+          {item.firstName}
         </Text>
       </Box>
     </Box>
   );
 }
 
-const RecentUtang = () => {
+const RecentLedger: React.FC<any> = ({ recentLedgerData }) => {
   return (
     <Box mt={5} mb={5}>
       <Box px={3} mb={3}>
         <Text fontSize="md" color="muted.700" bold>
-          Recent Utangs
+          Recent Ledgers
         </Text>
       </Box>
 
       <FlatList
-        data={DATA}
-        keyExtractor={(item) => item.id}
+        data={recentLedgerData}
+        keyExtractor={(item) => item._id}
         renderItem={renderItem}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
@@ -72,4 +56,4 @@ const RecentUtang = () => {
   );
 };
 
-export default RecentUtang;
+export default RecentLedger;

@@ -1,6 +1,5 @@
 import React from "react";
 import { Formik } from "formik";
-import * as Yup from "yup";
 import {
   FormControl,
   Input,
@@ -11,28 +10,17 @@ import {
   Box,
   TextArea,
 } from "native-base";
-
 import { useNavigation } from "@react-navigation/native";
 import { useMutation, useQueryClient } from "react-query";
-
 // API Service
-import { createUtang } from "../../../../services/userData";
-
-const formSchema = Yup.object().shape({
-  amount: Yup.string().required("This field is required"),
-});
+import { createUtang } from "../../../../../services/userData";
+import { addUtangValidationSchema } from "./AddUtangValidationSchema";
+import { addBayadInitialState } from "./initalState";
 
 const AddUtang = ({ route }: { route: any }) => {
+  const { userId } = route.params;
   const queryClient = useQueryClient();
   const navigation = useNavigation();
-  const { userId } = route.params;
-  const initialValues = {
-    userRef: userId,
-    amount: "",
-    description: "",
-    status: "utang",
-  };
-
   const createUserDataLedger = useMutation(createUtang, {
     onSuccess: () => {
       queryClient
@@ -50,8 +38,8 @@ const AddUtang = ({ route }: { route: any }) => {
     <ScrollView w="100%">
       <Box px={3} py={5}>
         <Formik
-          initialValues={initialValues}
-          validationSchema={formSchema}
+          initialValues={addBayadInitialState(userId)}
+          validationSchema={addUtangValidationSchema}
           onSubmit={handleSubmit}
         >
           {({
@@ -99,7 +87,6 @@ const AddUtang = ({ route }: { route: any }) => {
                 <Button
                   isLoading={createUserDataLedger.isLoading}
                   spinnerPlacement="end"
-                  isLoadingText="Saving..."
                   color="primary.900"
                   shadow={2}
                   onPress={() => {

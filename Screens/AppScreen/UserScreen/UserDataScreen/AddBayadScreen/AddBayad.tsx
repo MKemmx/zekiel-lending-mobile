@@ -1,6 +1,5 @@
 import React from "react";
 import { Formik } from "formik";
-import * as Yup from "yup";
 import {
   FormControl,
   Input,
@@ -10,34 +9,58 @@ import {
   WarningOutlineIcon,
   Box,
   TextArea,
+  useToast,
 } from "native-base";
-
 import { useNavigation } from "@react-navigation/native";
 import { useMutation, useQueryClient } from "react-query";
 
+// Alert Popper
+import ToastPopper from "../../../../../helpers/ToastPopper";
+// Validaion Schema
+import { addBayadValidationSchema } from "./AddBayadValidationSchema";
+import { addBayadInitialState } from "./initalState";
 // API Service
-import { createBayad } from "../../../../services/userData";
-
-const formSchema = Yup.object().shape({
-  amount: Yup.string().required("This field is required"),
-});
+import { createBayad } from "../../../../../services/userData";
 
 const AddBayad = ({ route }: { route: any }) => {
-  const queryClient = useQueryClient();
-  const navigation = useNavigation();
   const { userId } = route.params;
-  const initialValues = {
-    userRef: userId,
-    amount: "",
-    description: "",
-    status: "bayad",
-  };
+  const navigation = useNavigation();
+  const queryClient = useQueryClient();
+  const toast = useToast();
 
   const userDataMutation = useMutation(createBayad, {
     onSuccess: () => {
       queryClient
         .invalidateQueries("userData", userId)
         .then(() => navigation.goBack());
+      toast.show({
+        placement: "top",
+        render: ({ id }) => {
+          const toastDetils = {
+            title: `Success`,
+            description: `Bayad was successfully saved`,
+            variant: "left-accent",
+            isClosable: true,
+            status: "success",
+          };
+          return <ToastPopper id={id} {...toastDetils} />;
+        },
+      });
+    },
+    onError: (error: any) => {
+      toast.show({
+        placement: "top",
+        render: ({ id }) => {
+          const toastDetils = {
+            title: "Error",
+            description: `${error.response.data.msg}`,
+            variant: "left-accent",
+            isClosable: true,
+            status: "error",
+          };
+          return <ToastPopper id={id} {...toastDetils} />;
+        },
+      });
     },
   });
 
@@ -50,8 +73,8 @@ const AddBayad = ({ route }: { route: any }) => {
     <ScrollView w="100%">
       <Box px={3} py={5}>
         <Formik
-          initialValues={initialValues}
-          validationSchema={formSchema}
+          initialValues={addBayadInitialState(userId)}
+          validationSchema={addBayadValidationSchema}
           onSubmit={handleSubmit}
         >
           {({
@@ -99,7 +122,6 @@ const AddBayad = ({ route }: { route: any }) => {
                 <Button
                   isLoading={userDataMutation.isLoading}
                   spinnerPlacement="end"
-                  isLoadingText="Saving..."
                   color="primary.900"
                   shadow={2}
                   onPress={() => {

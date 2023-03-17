@@ -18,9 +18,7 @@ export const createUser = async (formData: any) => {
 };
 
 export const readUser = async (page: number, searchText: string) => {
-  const { data } = await userApi.get(
-    `/search?page=${page}&searchItem=${searchText}`
-  );
+  const { data } = await userApi.get(`/?page=${page}&searchItem=${searchText}`);
   return data;
 };
 

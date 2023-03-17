@@ -9,7 +9,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 // Auth Screens
 import Login from "./Screens/AuthScreen/Login";
-import Register from "./Screens/AuthScreen/Register";
+import Register from "./Screens/AuthScreen/RegisterScreen/Register";
 
 // APP Screens
 import HomeScreen from "./Screens/AppScreen/HomeScreen/Home";

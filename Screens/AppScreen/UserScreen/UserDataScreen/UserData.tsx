@@ -6,34 +6,27 @@ import {
   HStack,
   Spacer,
   View,
-  Container,
   Fab,
-  Flex,
   Stack,
 } from "native-base";
 import { RefreshControl, TouchableOpacity } from "react-native";
 import { SwipeListView } from "react-native-swipe-list-view";
 import { useNavigation } from "@react-navigation/native";
-
+// Components
+import Loading from "./Loading";
 // Day JS
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 dayjs.extend(localizedFormat);
-
 // React Query
 import { useQuery } from "react-query";
-
-// Icons
-import { Ionicons, FontAwesome5, AntDesign } from "@expo/vector-icons";
-
 // Services
 import { readOneUser } from "../../../../services/user";
 
 const UserData = ({ route }: { route: any }) => {
-  const navigation = useNavigation();
   const { userId } = route.params;
-
-  const { isLoading, isError, data, error, isFetching, refetch } = useQuery({
+  const navigation = useNavigation();
+  const { isLoading, isError, data, isFetching, refetch } = useQuery({
     queryKey: ["userData", userId],
     queryFn: () => readOneUser(userId),
   });
@@ -45,7 +38,7 @@ const UserData = ({ route }: { route: any }) => {
   if (isLoading) {
     return (
       <View>
-        <Text>Loading</Text>
+        <Loading />
       </View>
     );
   }
@@ -53,7 +46,7 @@ const UserData = ({ route }: { route: any }) => {
   if (isError) {
     return (
       <View>
-        <Text>Something went wrong!</Text>
+        <Text> Someting went wrong! </Text>
       </View>
     );
   }
@@ -92,7 +85,7 @@ const UserData = ({ route }: { route: any }) => {
                 <Box w="50%" py={2}>
                   <Text color="muted.700" textAlign="center" bold>
                     {"\u20B1"}
-                    {data?.results?.totalStatus[1].totalAmount}
+                    {data?.results?.totalUtang}
                   </Text>
                   <Text color="muted.700" textAlign="center">
                     Total Utang
@@ -102,7 +95,7 @@ const UserData = ({ route }: { route: any }) => {
                 <Box w="50%" py={2}>
                   <Text color="muted.700" textAlign="center" bold>
                     {"\u20B1"}
-                    {data?.results?.totalStatus[0].totalAmount}
+                    {data?.results?.totalBayad}
                   </Text>
                   <Text color="muted.700" textAlign="center">
                     Total Bayad
@@ -119,7 +112,7 @@ const UserData = ({ route }: { route: any }) => {
               >
                 <Text textAlign="center" bold>
                   {"\u20B1"}
-                  {data?.results?.totalStatus[2].totalAmount}
+                  {data?.results?.totalBalance}
                 </Text>
                 <Text textAlign="center"> Balance </Text>
               </Box>
@@ -144,9 +137,9 @@ const UserData = ({ route }: { route: any }) => {
                 <Box flexDirection="row">
                   <Text> Name </Text>
                   <Text ml={1}>
-                    {data?.results?.user?.firstName}
-                    {data?.results?.user?.middleName}
-                    {data?.results?.user?.lastName}
+                    {data?.results?.user?.firstName}{" "}
+                    {data?.results?.user?.middleName}{" "}
+                    {data?.results?.user?.lastName}{" "}
                   </Text>
                 </Box>
                 <Box flexDirection="row">
@@ -197,10 +190,10 @@ const UserData = ({ route }: { route: any }) => {
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ flexGrow: 1 }}
-          keyExtractor={(data: any) => data._id.toString()}
+          keyExtractor={(data: any) => data?._id?.toString()}
           data={data?.results?.userCredits}
           renderItem={({ item, index }) => {
-            const isBayad = item.status === "bayad" ? true : false;
+            const isBayad = item?.status === "bayad" ? true : false;
             return (
               <Box
                 key={index}
@@ -314,7 +307,6 @@ const UserData = ({ route }: { route: any }) => {
         }}
       />
       <Fab
-        // style={{ backgroundColor: "#1D3B80" }}
         w="40%"
         placement="bottom-right"
         renderInPortal={false}

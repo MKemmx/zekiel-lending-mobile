@@ -1,11 +1,10 @@
 import React from "react";
 // React navigation
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
 // User Stack Component
 import UserData from "./UserData";
-import AddUtang from "./AddUtang";
-import AddBayad from "./AddBayad";
+import AddUtang from "./AddUtangScreen/AddUtang";
+import AddBayad from "./AddBayadScreen/AddBayad";
 
 // Intialize Stack
 const UserDataStack = createNativeStackNavigator();

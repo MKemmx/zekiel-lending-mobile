@@ -26,15 +26,16 @@ import { useMutation, useQueryClient } from "react-query";
 // Services
 import { createUser } from "../../../../services/user";
 // Toast Component
-import Toast from "./Toast";
+import Toast from "../../../../helpers/ToastPopper";
 import ImageViewer from "./ImageViewer";
 // Vilidation Schema
-import { userValidationSchema } from "./ValidationShema";
+import { userValidationSchema } from "./UserValidationShema";
 import { initialState } from "./InitialState";
 
 const AddUser = () => {
   const toast = useToast();
   const navigation = useNavigation();
+
   const [selectedImage, setSelectedImage] = useState<any | null>(null);
   const pickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
