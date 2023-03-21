@@ -13,9 +13,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -33,6 +31,7 @@
       "eas": {
         "projectId": "cd732854-5a26-4348-ba31-793c48b16477"
       }
-    }
+    },
+    "owner": "zekiel"
   }
 }
