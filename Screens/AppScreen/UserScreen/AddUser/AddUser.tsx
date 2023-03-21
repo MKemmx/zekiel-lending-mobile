@@ -72,8 +72,8 @@ const AddUser = () => {
         },
       });
     },
-    onError: (error: any) => {
-      console.log(error.response.data.msg);
+    onError: (err: any) => {
+      console.warn(err.response.data.msg);
     },
   });
   // Submit Data
@@ -104,10 +104,11 @@ const AddUser = () => {
                   <HStack space={2} flexShrink={1}>
                     <Alert.Icon mt="1" />
                     <Text fontSize="md" color="coolGray.800">
-                      {createUserMuation.error}
+                      {createUserMuation?.error?.response?.data?.msg}
                     </Text>
                   </HStack>
                   <IconButton
+                    onPress={createUserMuation.reset}
                     variant="unstyled"
                     _focus={{
                       borderWidth: 0,
@@ -324,9 +325,9 @@ const AddUser = () => {
                   </FormControl>
 
                   <Button
+                    backgroundColor="#1D3B80"
                     isLoading={createUserMuation.isLoading}
                     spinnerPlacement="end"
-                    color="primary.900"
                     shadow={2}
                     onPress={() => {
                       handleSubmit();

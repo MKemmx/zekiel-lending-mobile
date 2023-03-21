@@ -70,18 +70,13 @@ const UserData = ({ route }: { route: any }) => {
                 }}
                 size="100px"
                 source={{
-                  uri: "http://demo.solwininfotech.com/wordpress/probit/wp-content/uploads/2015/12/Rick-Kelly.jpg",
+                  uri: data?.results?.user?.image?.url,
                 }}
               />
             </Box>
 
-            <Box w="70%">
-              <Box
-                w="100%"
-                backgroundColor="white"
-                flexDirection="row"
-                justifyContent="space-between"
-              >
+            <Box rounded={5} backgroundColor="white" w="70%">
+              <Box w="100%" flexDirection="row" justifyContent="space-between">
                 <Box w="50%" py={2}>
                   <Text color="muted.700" textAlign="center" bold>
                     {"\u20B1"}
@@ -273,7 +268,9 @@ const UserData = ({ route }: { route: any }) => {
           rightOpenValue={-230}
           onRowOpen={(rowKey, rowMap) => {
             setTimeout(() => {
-              rowMap[rowKey].closeRow();
+              if (rowKey) {
+                rowMap[rowKey].closeRow();
+              }
             }, 5000);
           }}
           // onEndReachedThreshold={1}

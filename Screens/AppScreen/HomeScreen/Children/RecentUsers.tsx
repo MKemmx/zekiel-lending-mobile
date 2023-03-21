@@ -1,4 +1,4 @@
-import { Text, Box, Image, FlatList } from "native-base";
+import { Text, Box, Image, FlatList, Container } from "native-base";
 import React from "react";
 
 interface IItem {
@@ -7,48 +7,32 @@ interface IItem {
   imageUrl: string;
 }
 
-const DATA: IItem[] = [
-  {
-    id: "1",
-    name: "Item 1",
-    imageUrl: "https://dummyimage.com/300x300/000/fff",
-  },
-  {
-    id: "2",
-    name: "Item 2",
-    imageUrl: "https://dummyimage.com/300x300/000/fff",
-  },
-  {
-    id: "3",
-    name: "Item 3",
-    imageUrl: "https://dummyimage.com/300x300/000/fff",
-  },
-];
-
-function renderItem({ item }: { item: IItem }) {
+function renderItem({ item }: { item: any }) {
   return (
     <Box
       flexDirection="row"
       alignItems="center"
-      p={4}
-      shadow={2}
-      backgroundColor="red.100"
+      p="4"
+      backgroundColor="white"
+      borderWidth="1"
+      borderColor="gray.200"
+      shadow="1"
     >
       <Image
-        alt={item?.name}
-        source={{ uri: item.imageUrl }}
+        alt={item?.firstName}
+        source={{ uri: item?.image?.url }}
         style={{ width: 100, height: 100, borderRadius: 8 }}
       />
-      <Box marginLeft={8}>
-        <Text fontWeight="bold" fontSize={16}>
-          {item.name}
+      <Box marginLeft={5}>
+        <Text fontWeight="bold" fontSize={14}>
+          {`${item.firstName} ${item.lastName}  `}
         </Text>
       </Box>
     </Box>
   );
 }
 
-const RecentUsers = () => {
+const RecentUsers: React.FC<any> = ({ recentUsersData }) => {
   return (
     <Box mt={5}>
       <Box px={3} mb={3}>
@@ -57,17 +41,34 @@ const RecentUsers = () => {
         </Text>
       </Box>
 
-      <FlatList
-        data={DATA}
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem}
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: 20 }}
-        ItemSeparatorComponent={() => {
-          return <Box w="3"> </Box>;
-        }}
-      />
+      {recentUsersData?.length <= 0 ? (
+        <Container
+          borderRadius={5}
+          mx="auto"
+          width="100%"
+          backgroundColor="gray.300"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          h="40"
+        >
+          <Text fontWeight="bold" fontSize={14}>
+            No Data
+          </Text>
+        </Container>
+      ) : (
+        <FlatList
+          data={recentUsersData}
+          keyExtractor={(item) => item._id}
+          renderItem={renderItem}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ paddingHorizontal: 20 }}
+          ItemSeparatorComponent={() => {
+            return <Box w="3"> </Box>;
+          }}
+        />
+      )}
     </Box>
   );
 };

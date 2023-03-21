@@ -4,7 +4,7 @@ import axios from "axios";
 import { ICreditLedger } from "../Interface/ICreditledger";
 
 export const creditLedgerAPI = axios.create({
-  baseURL: "http://192.168.0.110:5000/api/creditLedger",
+  baseURL: "http://192.168.0.112:5000/api/creditLedger",
 });
 
 export const createUtang = async (item: ICreditLedger) => {

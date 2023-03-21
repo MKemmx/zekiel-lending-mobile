@@ -1,17 +1,26 @@
 import React from "react";
 
 import { SafeAreaView } from "react-native-safe-area-context";
-import { VStack, Box, Container, Spacer, Center, Text } from "native-base";
+import { VStack, Box, Container, Center, Text, Image } from "native-base";
 
 const Settings = () => {
   return (
     <SafeAreaView>
       <VStack h="full">
-        {/* Header */}
-        <Box backgroundColor="#1d3b80" h="1/4">
-          Header
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          backgroundColor="#1d3b80"
+          h="1/4"
+        >
+          <Image
+            rounded={"lg"}
+            source={require("../../assets/newLogo.png")}
+            size={150}
+            alt="Logo"
+          />
         </Box>
-        {/* Body */}
         <Container py={12} flex={1} mx="auto" w="100%">
           <Box>
             <Text fontSize="sm">Personal Info</Text>
@@ -49,11 +58,10 @@ const Settings = () => {
             </Box>
           </VStack>
         </Container>
-        {/* Footer */}
-        <Box backgroundColor="white" shadow={1} h="16">
+        <Box shadow={1} h="16">
           <Center h="100%">
             <Text fontSize="xs" bold color="muted.500">
-              Zekiel Lending V.1
+              Zekiel Lending v.1
             </Text>
           </Center>
         </Box>

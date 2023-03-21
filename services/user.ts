@@ -4,7 +4,7 @@ import axios from "axios";
 import { IUser } from "../Interface/IUser";
 
 export const userApi = axios.create({
-  baseURL: "http://192.168.0.110:5000/api/user",
+  baseURL: "http://192.168.0.112:5000/api/user",
 });
 
 export const createUser = async (formData: any) => {

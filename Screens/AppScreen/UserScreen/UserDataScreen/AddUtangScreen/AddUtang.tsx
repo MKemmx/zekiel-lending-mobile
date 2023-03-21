@@ -76,9 +76,10 @@ const AddUtang = ({ route }: { route: any }) => {
                 <FormControl>
                   <FormControl.Label> Description </FormControl.Label>
                   <TextArea
+                    textAlignVertical="top"
                     size="lg"
                     autoCompleteType={false}
-                    h="32"
+                    h="40"
                     placeholder="Enter utang description"
                     w="100%"
                   />
@@ -87,7 +88,7 @@ const AddUtang = ({ route }: { route: any }) => {
                 <Button
                   isLoading={createUserDataLedger.isLoading}
                   spinnerPlacement="end"
-                  color="primary.900"
+                  backgroundColor="#1D3B80"
                   shadow={2}
                   onPress={() => {
                     handleSubmit();

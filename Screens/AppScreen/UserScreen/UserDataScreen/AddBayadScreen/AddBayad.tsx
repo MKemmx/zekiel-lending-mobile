@@ -122,7 +122,7 @@ const AddBayad = ({ route }: { route: any }) => {
                 <Button
                   isLoading={userDataMutation.isLoading}
                   spinnerPlacement="end"
-                  color="primary.900"
+                  backgroundColor="#1D3B80"
                   shadow={2}
                   onPress={() => {
                     handleSubmit();

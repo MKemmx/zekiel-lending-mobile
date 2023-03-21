@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const creditLedgerAPI = axios.create({
-  baseURL: "http://192.168.0.110:5000/api/creditLedger",
+  baseURL: "http://192.168.0.112:5000/api/creditLedger",
 });
 
 export const createCreditLedger = async (item: any) => {

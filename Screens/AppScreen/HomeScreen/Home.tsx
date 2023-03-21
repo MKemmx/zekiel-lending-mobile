@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 
 // Nativabase
-import { ScrollView, Text, Box, Image, HStack } from "native-base";
+import { ScrollView, Text, Box, Image } from "native-base";
 import { StyleSheet, RefreshControl } from "react-native";
 import HomeHeader from "./HomeHeader";
 
@@ -27,7 +27,6 @@ const Home = () => {
   } = useQuery("dashboard", readDashboard);
 
   const [refreshing, setRefreshing] = useState(false);
-
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     refetch();
@@ -52,13 +51,26 @@ const Home = () => {
       flex={1}
     >
       <HomeHeader />
-      <HStack mt={7} w="100%" px={5} direction="row">
+
+      <Box
+        mt="7"
+        gap={3}
+        mx="auto"
+        maxWidth="90%"
+        justifyContent="center"
+        alignItems="center"
+        display="flex"
+        flexDirection="row"
+      >
         <Box style={styles.dashboardCard}>
           <Box
-            alignItems={"center"}
+            py="2"
+            alignItems="center"
             w="100%"
-            backgroundColor={"red.100"}
-            py={2}
+            backgroundColor="white"
+            borderWidth="1"
+            borderColor="gray.100"
+            shadow="1"
           >
             <Image
               source={{
@@ -66,7 +78,7 @@ const Home = () => {
               }}
               alt="Users"
               size="md"
-              mb={2}
+              mb="2"
             />
             <Text fontSize="md" bold>
               Total Users
@@ -80,10 +92,13 @@ const Home = () => {
 
         <Box style={styles.dashboardCard}>
           <Box
-            py={2}
-            alignItems={"center"}
+            py="2"
+            alignItems="center"
             w="100%"
-            backgroundColor={"red.100"}
+            backgroundColor="white"
+            borderWidth="1"
+            borderColor="gray.100"
+            shadow="1"
           >
             <Image
               source={{
@@ -101,8 +116,9 @@ const Home = () => {
             </Text>
           </Box>
         </Box>
-      </HStack>
-      <RecentUsers />
+      </Box>
+
+      <RecentUsers recentUsersData={dashboardData.recentUsers} />
       <RecentLedger recentLedgerData={dashboardData.recentCreditLedger} />
     </ScrollView>
   );
