@@ -1,9 +1,22 @@
 import React from "react";
 
 import { SafeAreaView } from "react-native-safe-area-context";
-import { VStack, Box, Container, Center, Text, Image } from "native-base";
+import {
+  VStack,
+  Box,
+  Container,
+  Center,
+  Text,
+  Image,
+  Button,
+} from "native-base";
+
+// Login State
+import { useLoginStore } from "../../store/loginStore";
 
 const Settings = () => {
+  const { user, logOut } = useLoginStore((state) => state);
+
   return (
     <SafeAreaView>
       <VStack h="full">
@@ -35,10 +48,10 @@ const Settings = () => {
               px={3}
             >
               <Text mr={3} fontSize="lg">
-                Name
+                Name:
               </Text>
               <Text bold fontSize="lg">
-                Mark Kemm Asdilla
+                {user?.userName}
               </Text>
             </Box>
             <Box
@@ -50,11 +63,23 @@ const Settings = () => {
               px={3}
             >
               <Text mr={3} fontSize="lg">
-                Email
+                Email:
               </Text>
               <Text bold fontSize="lg">
-                kimasdilla@gmail.com
+                {user?.email}
               </Text>
+            </Box>
+
+            <Box rounded="md">
+              <Button
+                backgroundColor="#1D3B80"
+                w="100%"
+                py={2.5}
+                px={2.5}
+                onPress={logOut}
+              >
+                Logout
+              </Button>
             </Box>
           </VStack>
         </Container>

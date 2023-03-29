@@ -18,6 +18,10 @@ import { readDashboard } from "../../../services/dashboard";
 // Loading Skeleton
 import HomeSkeleton from "./HomeSkeleton";
 
+// Images
+import usersImage from "../../../assets/DashboardImages/users.png";
+import ledgersImage from "../../../assets/DashboardImages/ledger.png";
+
 const Home = () => {
   const {
     data: dashboardData,
@@ -64,22 +68,14 @@ const Home = () => {
       >
         <Box style={styles.dashboardCard}>
           <Box
-            py="2"
+            py="3"
             alignItems="center"
             w="100%"
             backgroundColor="white"
             borderWidth="1"
-            borderColor="gray.100"
-            shadow="1"
+            borderColor="gray.200"
           >
-            <Image
-              source={{
-                uri: "https://cdn-icons-png.flaticon.com/512/1256/1256650.png",
-              }}
-              alt="Users"
-              size="md"
-              mb="2"
-            />
+            <Image source={usersImage} alt="Users" size="md" mb="2" />
             <Text fontSize="md" bold>
               Total Users
             </Text>
@@ -92,22 +88,14 @@ const Home = () => {
 
         <Box style={styles.dashboardCard}>
           <Box
-            py="2"
+            py="3"
             alignItems="center"
             w="100%"
             backgroundColor="white"
             borderWidth="1"
-            borderColor="gray.100"
-            shadow="1"
+            borderColor="gray.200"
           >
-            <Image
-              source={{
-                uri: "https://cdn-icons-png.flaticon.com/512/1256/1256650.png",
-              }}
-              alt="Users"
-              size="md"
-              mb={2}
-            />
+            <Image source={ledgersImage} alt="Ledgers" size="md" mb={2} />
             <Text fontSize="md" bold>
               Total Credit Ledgers
             </Text>
@@ -117,9 +105,6 @@ const Home = () => {
           </Box>
         </Box>
       </Box>
-
-      <RecentUsers recentUsersData={dashboardData.recentUsers} />
-      <RecentLedger recentLedgerData={dashboardData.recentCreditLedger} />
     </ScrollView>
   );
 };

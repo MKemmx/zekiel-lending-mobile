@@ -1,39 +1,35 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 interface IAuth {
   isAuthenticated: boolean;
-  loading: boolean;
-  error: string | null;
   token: string | null;
   user: any | null;
-  login: (loginData: any) => void;
-  register: (registerData: any) => void;
-  logout: () => void;
+  setLoginResponseData: (loginData: any) => void;
+  logOut: () => void;
 }
 
-export const useLoginStore = create<IAuth>((set) => ({
-  isAuthenticated: false,
-  loading: false,
-  error: null,
-  token: null,
-  user: null,
-  login: (loginData) => {
-    set({
-      isAuthenticated: true,
-      loading: false,
-      error: null,
-      token: null,
-      user: null,
-    });
-  },
-  register: (registerData) => set((state: any) => ({})),
-  logout: () => {
-    set({
+export const useLoginStore = create<IAuth>()(
+  persist(
+    (set, get) => ({
       isAuthenticated: false,
-      loading: false,
-      error: null,
       token: null,
       user: null,
-    });
-  },
-}));
+      setLoginResponseData: (authResponse) => {
+        set(authResponse);
+      },
+      logOut: () => {
+        set({
+          isAuthenticated: false,
+          token: null,
+          user: null,
+        });
+      },
+    }),
+    {
+      name: "login-storage",
+      storage: createJSONStorage(() => AsyncStorage),
+    }
+  )
+);

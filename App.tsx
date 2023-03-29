@@ -8,7 +8,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 // Auth Screens
-import Login from "./Screens/AuthScreen/Login";
+import Login from "./Screens/AuthScreen/Login/Login";
 import Register from "./Screens/AuthScreen/RegisterScreen/Register";
 
 // APP Screens
