@@ -34,7 +34,6 @@ const AddUtang = ({ route }: { route: any }) => {
 
   // Submit Form
   const handleSubmit = (values: any) => {
-    console.log(values);
     createUserDataLedger.mutate(values);
   };
 

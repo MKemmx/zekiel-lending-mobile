@@ -11,7 +11,7 @@ import {
   Spinner,
   View,
 } from "native-base";
-import { RefreshControl, TouchableOpacity } from "react-native";
+import { RefreshControl, TouchableOpacity, ScrollView } from "react-native";
 import { SwipeListView } from "react-native-swipe-list-view";
 
 // Icons
@@ -101,7 +101,16 @@ const UserItem = ({ navigation }: { navigation: any }) => {
       ) : (
         <React.Fragment>
           {userData!.length <= 0 ? (
-            <NoData searchText={searchText} />
+            <ScrollView
+              refreshControl={
+                <RefreshControl
+                  refreshing={isFetching && isLoading}
+                  onRefresh={handleRefresh}
+                />
+              }
+            >
+              <NoData searchText={searchText} />
+            </ScrollView>
           ) : (
             <Box
               style={{

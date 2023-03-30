@@ -1,7 +1,7 @@
 import { Image, Text, Box, Heading } from "native-base";
 
 interface INoData {
-  searchText: string;
+  searchText?: string;
 }
 
 const NoData: React.FC<INoData> = ({ searchText }) => {
@@ -11,7 +11,7 @@ const NoData: React.FC<INoData> = ({ searchText }) => {
     : "Add your input";
 
   return (
-    <Box rounded={"lg"} style={{ backgroundColor: "white" }} py={12}>
+    <Box rounded={"lg"} backgroundColor="white" py={4}>
       <Box height={10} mb={10} alignItems={"center"}>
         <Heading size="lg" fontWeight="600">
           {headerMessage}

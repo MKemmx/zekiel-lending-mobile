@@ -183,7 +183,7 @@ const Login = ({ navigation }: { navigation: any }) => {
                     >
                       Login
                     </Button>
-
+                    {/* 
                     <Flex justifyContent={"center"} flexDirection={"row"}>
                       <Text fontSize="sm" mr={1} color="gray.500">
                         Don't have an account?
@@ -197,7 +197,7 @@ const Login = ({ navigation }: { navigation: any }) => {
                       >
                         Register here
                       </Text>
-                    </Flex>
+                    </Flex> */}
                   </Stack>
                 </>
               );

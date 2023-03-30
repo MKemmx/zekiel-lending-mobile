@@ -1,6 +1,6 @@
 import React from "react";
 // React Native
-import { RefreshControl } from "react-native";
+import { RefreshControl, ScrollView } from "react-native";
 
 import {
   VStack,
@@ -100,7 +100,16 @@ const CreditItem = () => {
       ) : (
         <React.Fragment>
           {creditLedgerData!.length <= 0 ? (
-            <NoData searchText={searchText} />
+            <ScrollView
+              refreshControl={
+                <RefreshControl
+                  refreshing={isFetching && isLoading}
+                  onRefresh={handleRefresh}
+                />
+              }
+            >
+              <NoData searchText={searchText} />
+            </ScrollView>
           ) : (
             <React.Fragment>
               <Box

@@ -15,6 +15,8 @@ import { useNavigation } from "@react-navigation/native";
 // Components
 import SwiperUser from "./SwiperUser";
 import Loading from "./Loading";
+import Nodata from "../../../../components/NoData";
+
 // Day JS
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
@@ -91,7 +93,7 @@ const UserData = ({ route }: { route: any }) => {
                 </Box>
 
                 <Box w="50%" py={2}>
-                  <Text color="muted.700" textAlign="center" bold>
+                  <Text color="success.700" textAlign="center" bold>
                     {"\u20B1"}
                     {data?.results?.totalBayad}
                   </Text>
@@ -108,7 +110,7 @@ const UserData = ({ route }: { route: any }) => {
                 backgroundColor="white"
                 py={3}
               >
-                <Text textAlign="center" bold>
+                <Text color="danger.700" textAlign="center" bold>
                   {"\u20B1"}
                   {data?.results?.totalBalance}
                 </Text>
@@ -174,6 +176,12 @@ const UserData = ({ route }: { route: any }) => {
           </Box>
         </Box>
       </Box>
+
+      {userCredits.length <= 0 && (
+        <Box>
+          <Nodata />
+        </Box>
+      )}
 
       <Box flex={1} px="5" py="2" mt="1" mb="16">
         <SwipeListView
