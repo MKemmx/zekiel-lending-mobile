@@ -18,6 +18,7 @@ import {
   Text,
   CloseIcon,
   IconButton,
+  Flex,
 } from "native-base";
 
 // React Query
@@ -175,14 +176,28 @@ const Login = ({ navigation }: { navigation: any }) => {
                     <Button
                       backgroundColor="#1D3B80"
                       isLoading={loginMutation.isLoading}
-                      spinnerPlacement="end"
-                      shadow={2}
+                      shadow={1}
                       onPress={() => {
                         handleSubmit();
                       }}
                     >
-                      Save
+                      Login
                     </Button>
+
+                    <Flex justifyContent={"center"} flexDirection={"row"}>
+                      <Text fontSize="sm" mr={1} color="gray.500">
+                        Don't have an account?
+                      </Text>
+                      <Text
+                        onPress={() => {
+                          navigation.navigate("Register");
+                        }}
+                        fontSize="sm"
+                        color="#1D3B80"
+                      >
+                        Register here
+                      </Text>
+                    </Flex>
                   </Stack>
                 </>
               );

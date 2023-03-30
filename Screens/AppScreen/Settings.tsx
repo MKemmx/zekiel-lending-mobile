@@ -1,5 +1,6 @@
 import React from "react";
 
+import { Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   VStack,
@@ -17,6 +18,15 @@ import { useLoginStore } from "../../store/loginStore";
 const Settings = () => {
   const { user, logOut } = useLoginStore((state) => state);
 
+  const createTwoButtonAlert = () =>
+    Alert.alert("Logout", "Are you sure you want to logout?", [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      { text: "OK", onPress: logOut },
+    ]);
+
   return (
     <SafeAreaView>
       <VStack h="full">
@@ -28,7 +38,7 @@ const Settings = () => {
           h="1/4"
         >
           <Image
-            rounded={"lg"}
+            rounded={"md"}
             source={require("../../assets/newLogo.png")}
             size={150}
             alt="Logo"
@@ -47,10 +57,10 @@ const Settings = () => {
               py={3}
               px={3}
             >
-              <Text mr={3} fontSize="lg">
-                Name:
+              <Text mr={3} fontSize="md">
+                Username:
               </Text>
-              <Text bold fontSize="lg">
+              <Text bold fontSize="md">
                 {user?.userName}
               </Text>
             </Box>
@@ -62,10 +72,10 @@ const Settings = () => {
               py={3}
               px={3}
             >
-              <Text mr={3} fontSize="lg">
+              <Text mr={3} fontSize="md">
                 Email:
               </Text>
-              <Text bold fontSize="lg">
+              <Text bold fontSize="md">
                 {user?.email}
               </Text>
             </Box>
@@ -76,7 +86,7 @@ const Settings = () => {
                 w="100%"
                 py={2.5}
                 px={2.5}
-                onPress={logOut}
+                onPress={createTwoButtonAlert}
               >
                 Logout
               </Button>

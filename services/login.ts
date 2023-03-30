@@ -5,7 +5,6 @@ export const loginAPI = axios.create({
 });
 
 export const loginService = async (loginData: any) => {
-  console.log(1);
   const { data } = await loginAPI.post(`/`, loginData);
   return data;
 };

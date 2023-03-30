@@ -9,10 +9,11 @@ import {
   Fab,
   Stack,
 } from "native-base";
-import { RefreshControl, TouchableOpacity } from "react-native";
+import { RefreshControl } from "react-native";
 import { SwipeListView } from "react-native-swipe-list-view";
 import { useNavigation } from "@react-navigation/native";
 // Components
+import SwiperUser from "./SwiperUser";
 import Loading from "./Loading";
 // Day JS
 import dayjs from "dayjs";
@@ -35,6 +36,8 @@ const UserData = ({ route }: { route: any }) => {
     refetch();
   }, [refetch]);
 
+  const userCredits = data?.results?.userCredits;
+
   if (isLoading) {
     return (
       <View>
@@ -53,7 +56,7 @@ const UserData = ({ route }: { route: any }) => {
 
   return (
     <Box flex={1}>
-      <Box h="auto" backgroundColor="light.300">
+      <Box h="auto" backgroundColor="gray.200">
         <Box py={3} h="auto" w="100%" rounded="lg" flexDirection="column">
           <Box
             w="100%"
@@ -115,12 +118,12 @@ const UserData = ({ route }: { route: any }) => {
           </Box>
 
           <Box
-            px={3}
-            justifyContent="space-between"
+            justifyContent="center"
             alignItems="center"
             w="100%"
+            flexDirection="row"
             mt={5}
-            flexDirection={"row"}
+            gap={3}
           >
             <Box>
               <Box>
@@ -130,20 +133,20 @@ const UserData = ({ route }: { route: any }) => {
               </Box>
               <Stack direction="column" mb="2.5" mt="1.5" space={1}>
                 <Box flexDirection="row">
-                  <Text> Name </Text>
-                  <Text ml={1}>
+                  <Text bold> Name: </Text>
+                  <Text>
                     {data?.results?.user?.firstName}{" "}
                     {data?.results?.user?.middleName}{" "}
                     {data?.results?.user?.lastName}{" "}
                   </Text>
                 </Box>
                 <Box flexDirection="row">
-                  <Text> Address </Text>
-                  <Text ml={1}>{data?.results?.user?.address}</Text>
+                  <Text bold> Address: </Text>
+                  <Text>{data?.results?.user?.address}</Text>
                 </Box>
                 <Box flexDirection="row">
-                  <Text> Phone Number </Text>
-                  <Text ml={1}>{data?.results?.user?.phoneNumber}</Text>
+                  <Text bold> Phone Number: </Text>
+                  <Text>{data?.results?.user?.phoneNumber} </Text>
                 </Box>
               </Stack>
             </Box>
@@ -155,16 +158,16 @@ const UserData = ({ route }: { route: any }) => {
               </Box>
               <Stack direction="column" mb="2.5" mt="1.5" space={1}>
                 <Box flexDirection="row">
-                  <Text> Bank Name </Text>
-                  <Text ml={1}>{data?.results?.user?.bankName}</Text>
+                  <Text bold> Bank Name: </Text>
+                  <Text>{data?.results?.user?.bankName}</Text>
                 </Box>
                 <Box flexDirection="row">
-                  <Text> Account Number </Text>
-                  <Text ml={1}>{data?.results?.user?.accountNumber}</Text>
+                  <Text bold> Account #: </Text>
+                  <Text>{data?.results?.user?.accountNumber}</Text>
                 </Box>
                 <Box flexDirection="row">
-                  <Text> Pin Code </Text>
-                  <Text ml={1}>{data?.results?.user?.pinCode}</Text>
+                  <Text bold> Pin Code: </Text>
+                  <Text>{data?.results?.user?.pinCode}</Text>
                 </Box>
               </Stack>
             </Box>
@@ -186,7 +189,7 @@ const UserData = ({ route }: { route: any }) => {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ flexGrow: 1 }}
           keyExtractor={(data: any) => data?._id?.toString()}
-          data={data?.results?.userCredits}
+          data={userCredits}
           renderItem={({ item, index }) => {
             const isBayad = item?.status === "bayad" ? true : false;
             return (
@@ -224,52 +227,14 @@ const UserData = ({ route }: { route: any }) => {
             );
           }}
           renderHiddenItem={(rowData, rowMap) => {
-            return (
-              <Box overflow={"hidden"} pr={2} mb={5}>
-                <HStack space={[0, 0]} justifyContent="space-between">
-                  <Spacer />
-                  <TouchableOpacity>
-                    <Box
-                      justifyContent={"center"}
-                      alignSelf="center"
-                      px={6}
-                      style={{
-                        backgroundColor: "blue",
-                        height: "100%",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Text color="white" fontSize="xs">
-                        Print
-                      </Text>
-                    </Box>
-                  </TouchableOpacity>
-                  <TouchableOpacity>
-                    <Box
-                      justifyContent={"center"}
-                      alignSelf="center"
-                      px={6}
-                      style={{
-                        backgroundColor: "red",
-                        height: "100%",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Text color="white" fontSize="xs">
-                        Delete
-                      </Text>
-                    </Box>
-                  </TouchableOpacity>
-                </HStack>
-              </Box>
-            );
+            return <SwiperUser rowData={rowData} rowMap={rowMap} />;
           }}
           leftOpenValue={-1}
-          rightOpenValue={-230}
+          rightOpenValue={-175}
           onRowOpen={(rowKey, rowMap) => {
             setTimeout(() => {
               if (rowKey) {
-                rowMap[rowKey].closeRow();
+                rowMap[rowKey]?.closeRow();
               }
             }, 5000);
           }}

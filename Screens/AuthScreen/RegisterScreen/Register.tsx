@@ -157,16 +157,16 @@ const Register = ({ navigation }: { navigation: any }) => {
               )}
             </Formik>
 
-            <Flex justifyContent={"center"} flexDirection={"row"} mt="1">
-              <Text fontSize="sm" style={{ color: "gray" }}>
-                Already have account?{" "}
+            <Flex justifyContent={"center"} flexDirection={"row"}>
+              <Text fontSize="sm" mr={1} color="gray.500">
+                Already have account?
               </Text>
               <Text
                 onPress={() => {
                   navigation.navigate("Login");
                 }}
                 fontSize="sm"
-                style={{ color: "gray" }}
+                color="#1D3B80"
               >
                 Login here
               </Text>

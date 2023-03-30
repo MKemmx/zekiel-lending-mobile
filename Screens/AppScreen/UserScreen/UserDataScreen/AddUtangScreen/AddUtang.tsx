@@ -27,10 +27,14 @@ const AddUtang = ({ route }: { route: any }) => {
         .invalidateQueries("userData", userId)
         .then(() => navigation.goBack());
     },
+    onError: (err: any) => {
+      console.log(err?.response.data.msg);
+    },
   });
 
   // Submit Form
   const handleSubmit = (values: any) => {
+    console.log(values);
     createUserDataLedger.mutate(values);
   };
 
@@ -82,6 +86,9 @@ const AddUtang = ({ route }: { route: any }) => {
                     h="40"
                     placeholder="Enter utang description"
                     w="100%"
+                    onChangeText={handleChange("description")}
+                    onBlur={handleBlur("description")}
+                    value={values.description}
                   />
                 </FormControl>
 

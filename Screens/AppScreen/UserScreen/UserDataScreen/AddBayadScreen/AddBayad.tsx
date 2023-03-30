@@ -116,6 +116,9 @@ const AddBayad = ({ route }: { route: any }) => {
                     h="32"
                     placeholder="Enter utang description"
                     w="100%"
+                    onChangeText={handleChange("description")}
+                    onBlur={handleBlur("description")}
+                    value={values.description}
                   />
                 </FormControl>
 

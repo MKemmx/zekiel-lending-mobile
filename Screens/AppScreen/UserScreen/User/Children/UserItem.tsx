@@ -24,6 +24,7 @@ import { useDebounce } from "use-debounce";
 // Components
 import ListLoader from "../../../../../components/ListLoader";
 import NoData from "../../../../../components/NoData";
+import PrintButton from "./PrintButton";
 
 // Services
 import { readUser } from "../../../../../services/user";
@@ -185,6 +186,8 @@ const UserItem = ({ navigation }: { navigation: any }) => {
                     <Box p={2} overflow={"hidden"} px={0} mb={5}>
                       <HStack space={[0, 0]} justifyContent="space-between">
                         <Spacer />
+                        <PrintButton rowData={rowData} />
+
                         <TouchableOpacity
                           onPress={() => {
                             navigation.navigate("User Data Stack", {
@@ -206,44 +209,12 @@ const UserItem = ({ navigation }: { navigation: any }) => {
                             </Text>
                           </View>
                         </TouchableOpacity>
-                        <TouchableOpacity>
-                          <Box
-                            justifyContent={"center"}
-                            alignSelf="center"
-                            px={6}
-                            style={{
-                              backgroundColor: "blue",
-                              height: "100%",
-                              justifyContent: "center",
-                            }}
-                          >
-                            <Text color="white" fontSize="xs">
-                              Print
-                            </Text>
-                          </Box>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                          <Box
-                            justifyContent={"center"}
-                            alignSelf="center"
-                            px={6}
-                            style={{
-                              backgroundColor: "red",
-                              height: "100%",
-                              justifyContent: "center",
-                            }}
-                          >
-                            <Text color="white" fontSize="xs">
-                              Delete
-                            </Text>
-                          </Box>
-                        </TouchableOpacity>
                       </HStack>
                     </Box>
                   );
                 }}
                 leftOpenValue={-1}
-                rightOpenValue={-230}
+                rightOpenValue={-160}
                 onRowOpen={(rowKey, rowMap) => {
                   setTimeout(() => {
                     if (rowMap[rowKey]) {
