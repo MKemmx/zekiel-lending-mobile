@@ -289,6 +289,7 @@ const AddUser = () => {
                     <FormControl.Label> Bank Account Number </FormControl.Label>
                     <Input
                       size="lg"
+                      keyboardType="numeric"
                       placeholder="Enter account #"
                       onChangeText={handleChange("accountNumber")}
                       onBlur={handleBlur("accountNumber")}
