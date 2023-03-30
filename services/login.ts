@@ -1,7 +1,9 @@
 import axios from "axios";
 
+// Base URl
+import { baseURL } from "./baseURL";
 export const loginAPI = axios.create({
-  baseURL: "http://192.168.0.112:5000/api/login",
+  baseURL: `${baseURL}/api/login`,
 });
 
 export const loginService = async (loginData: any) => {

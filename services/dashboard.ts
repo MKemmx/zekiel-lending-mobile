@@ -1,6 +1,9 @@
 import axios from "axios";
+
+// Base URl
+import { baseURL } from "./baseURL";
 export const dashboardAPI = axios.create({
-  baseURL: "http://192.168.0.112:5000/api/dashboard",
+  baseURL: `${baseURL}/dashboard`,
 });
 
 import { useLoginStore } from "../store/loginStore";

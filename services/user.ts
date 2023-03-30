@@ -1,8 +1,10 @@
 import { useLoginStore } from "../store/loginStore";
 
 import axios from "axios";
+// Base URl
+import { baseURL } from "./baseURL";
 export const userApi = axios.create({
-  baseURL: "http://192.168.0.112:5000/api/user",
+  baseURL: `${baseURL}/user`,
 });
 
 // Interface

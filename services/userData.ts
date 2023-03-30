@@ -1,8 +1,10 @@
 import { useLoginStore } from "../store/loginStore";
 
 import axios from "axios";
+// Base URl
+import { baseURL } from "./baseURL";
 export const creditLedgerAPI = axios.create({
-  baseURL: "http://192.168.0.112:5000/api/creditLedger",
+  baseURL: `${baseURL}/creditLedger`,
 });
 
 //  Interface
