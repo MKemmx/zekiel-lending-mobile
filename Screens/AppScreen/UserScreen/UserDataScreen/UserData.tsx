@@ -8,6 +8,7 @@ import {
   View,
   Fab,
   Stack,
+  ScrollView,
 } from "native-base";
 import { RefreshControl } from "react-native";
 import { SwipeListView } from "react-native-swipe-list-view";
@@ -119,21 +120,31 @@ const UserData = ({ route }: { route: any }) => {
             </Box>
           </Box>
 
-          <Box
-            justifyContent="center"
-            alignItems="center"
-            w="100%"
-            flexDirection="row"
-            mt={5}
-            gap={3}
+          <ScrollView
+            mt={1}
+            px={3}
+            pt={3}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            w="auto"
           >
-            <Box>
+            <Box
+              py={1}
+              px={3}
+              flexGrow={1}
+              mr={4}
+              rounded={"md"}
+              backgroundColor="white"
+              minW="220"
+              w="auto"
+            >
               <Box>
-                <Text fontSize="xs" color="muted.600">
+                <Text bold textAlign={"center"} fontSize="xs" color="muted.600">
                   Personal Info
                 </Text>
               </Box>
-              <Stack direction="column" mb="2.5" mt="1.5" space={1}>
+              <Stack direction="column" mb="2" mt="1" space={1}>
                 <Box flexDirection="row">
                   <Text bold> Name: </Text>
                   <Text>
@@ -152,9 +163,18 @@ const UserData = ({ route }: { route: any }) => {
                 </Box>
               </Stack>
             </Box>
-            <Box>
+            <Box
+              mr={8}
+              py={1}
+              px={3}
+              flexGrow={1}
+              rounded={"md"}
+              backgroundColor="white"
+              w="auto"
+              minW="220"
+            >
               <Box>
-                <Text fontSize="xs" color="muted.600">
+                <Text bold textAlign={"center"} fontSize="xs" color="muted.600">
                   Bank Information
                 </Text>
               </Box>
@@ -173,7 +193,7 @@ const UserData = ({ route }: { route: any }) => {
                 </Box>
               </Stack>
             </Box>
-          </Box>
+          </ScrollView>
         </Box>
       </Box>
 

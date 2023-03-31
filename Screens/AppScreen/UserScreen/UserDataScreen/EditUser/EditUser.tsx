@@ -51,15 +51,15 @@ const EditUser = ({ route }: { route: any }) => {
   }
 
   const initialState = {
-    _id: readOneUserQuery.data.results.user._id,
-    firstName: readOneUserQuery.data.results.user.firstName,
-    middleName: readOneUserQuery.data.results.user.middleName,
-    lastName: readOneUserQuery.data.results.user.lastName,
-    address: readOneUserQuery.data.results.user.address,
-    phoneNumber: readOneUserQuery.data.results.user.phoneNumber,
-    bankName: readOneUserQuery.data.results.user.bankName,
-    accountNumber: readOneUserQuery.data.results.user.accountNumber,
-    pinCode: readOneUserQuery.data.results.user.accountNumber,
+    _id: readOneUserQuery.data.results.user?._id,
+    firstName: readOneUserQuery.data.results.user?.firstName,
+    middleName: readOneUserQuery.data.results.user?.middleName,
+    lastName: readOneUserQuery.data.results.user?.lastName,
+    address: readOneUserQuery.data.results.user?.address,
+    phoneNumber: readOneUserQuery.data.results.user?.phoneNumber,
+    bankName: readOneUserQuery.data.results.user?.bankName,
+    accountNumber: readOneUserQuery.data.results.user?.accountNumber,
+    pinCode: readOneUserQuery.data.results.user?.accountNumber,
   };
 
   // Query Client
@@ -142,7 +142,7 @@ const EditUser = ({ route }: { route: any }) => {
                       placeholder="Enter first name"
                       onChangeText={handleChange("firstName")}
                       onBlur={handleBlur("firstName")}
-                      value={values.firstName}
+                      value={values?.firstName}
                     />
                     {errors.firstName && touched.firstName && (
                       <FormControl.ErrorMessage
@@ -164,7 +164,7 @@ const EditUser = ({ route }: { route: any }) => {
                       placeholder="Enter middle name"
                       onChangeText={handleChange("middleName")}
                       onBlur={handleBlur("middleName")}
-                      value={values.middleName}
+                      value={values?.middleName}
                     />
                     {errors.middleName && touched.middleName && (
                       <FormControl.ErrorMessage
@@ -186,7 +186,7 @@ const EditUser = ({ route }: { route: any }) => {
                       placeholder="Enter last name"
                       onChangeText={handleChange("lastName")}
                       onBlur={handleBlur("lastName")}
-                      value={values.lastName}
+                      value={values?.lastName}
                     />
                     {errors.lastName && touched.lastName && (
                       <FormControl.ErrorMessage
@@ -206,7 +206,7 @@ const EditUser = ({ route }: { route: any }) => {
                       placeholder="Enter address"
                       onChangeText={handleChange("address")}
                       onBlur={handleBlur("address")}
-                      value={values.address}
+                      value={values?.address}
                     />
                     {errors.address && touched.address && (
                       <FormControl.ErrorMessage
@@ -229,7 +229,7 @@ const EditUser = ({ route }: { route: any }) => {
                       placeholder="Enter phone number"
                       onChangeText={handleChange("phoneNumber")}
                       onBlur={handleBlur("phoneNumber")}
-                      value={values.phoneNumber}
+                      value={values?.phoneNumber}
                     />
                     {errors.phoneNumber && touched.phoneNumber && (
                       <FormControl.ErrorMessage
@@ -251,7 +251,7 @@ const EditUser = ({ route }: { route: any }) => {
                       placeholder="Enter bank name"
                       onChangeText={handleChange("bankName")}
                       onBlur={handleBlur("bankName")}
-                      value={values.bankName}
+                      value={values?.bankName}
                     />
                     {errors.bankName && touched.bankName && (
                       <FormControl.ErrorMessage
@@ -278,7 +278,7 @@ const EditUser = ({ route }: { route: any }) => {
                       placeholder="Enter account/card #"
                       onChangeText={handleChange("accountNumber")}
                       onBlur={handleBlur("accountNumber")}
-                      value={values.accountNumber.toString()}
+                      value={values?.accountNumber?.toString()}
                     />
                     {errors.accountNumber && touched.accountNumber && (
                       <FormControl.ErrorMessage
@@ -299,7 +299,7 @@ const EditUser = ({ route }: { route: any }) => {
                       placeholder="Enter pin code"
                       onChangeText={handleChange("pinCode")}
                       onBlur={handleBlur("pinCode")}
-                      value={values.pinCode.toString()}
+                      value={values?.pinCode?.toString()}
                     />
                     {errors.pinCode && touched.pinCode && (
                       <FormControl.ErrorMessage
