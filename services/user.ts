@@ -13,7 +13,7 @@ import { IUser } from "../Interface/IUser";
 export const createUser = async (formData: any) => {
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
       "auth-token": useLoginStore.getState().token,
     },
   };

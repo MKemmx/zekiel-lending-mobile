@@ -1,142 +1,125 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   FormControl,
   Input,
   Stack,
-  ScrollView,
   Button,
   WarningOutlineIcon,
+  Text,
+  View,
+  ScrollView,
   Box,
-  useToast,
   Alert,
   VStack,
   HStack,
-  Text,
   IconButton,
   CloseIcon,
+  useToast,
 } from "native-base";
-import { TouchableOpacity } from "react-native";
+
+// React Query
+import { useQuery, useMutation, useQueryClient } from "react-query";
 // React navigation
 import { useNavigation } from "@react-navigation/native";
 // Formik
 import { Formik } from "formik";
-import * as ImagePicker from "expo-image-picker";
-// React Query
-import { useMutation, useQueryClient } from "react-query";
-// Services
-import { createUser } from "../../../../services/user";
-// Toast Component
-import Toast from "../../../../helpers/ToastPopper";
-import ImageViewer from "./ImageViewer";
-// Vilidation Schema
-import { userValidationSchema } from "./UserValidationShema";
-import { initialState } from "./InitialState";
 
-const AddUser = () => {
+// Services
+import { readOneUser, updateUser } from "../../../../../services/user";
+import ToastPopper from "../../../../../helpers/ToastPopper";
+
+const EditUser = ({ route }: { route: any }) => {
   const toast = useToast();
   const navigation = useNavigation();
+  const { userId } = route.params;
+  const readOneUserQuery = useQuery({
+    queryKey: ["userData", userId],
+    queryFn: () => readOneUser(userId),
+  });
 
-  const [selectedImage, setSelectedImage] = useState<any | null>(null);
-  const pickImageAsync = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
-      quality: 1,
-    });
-    if (!result.canceled) {
-      setSelectedImage(result);
-    } else {
-      setSelectedImage(null);
-      alert("You did not select any image.");
-    }
+  if (readOneUserQuery.isLoading) {
+    <View>
+      <Text>Loading...</Text>
+    </View>;
+  }
+
+  if (readOneUserQuery.isError) {
+    <View>
+      <Text>Error</Text>
+      <Text> {`${readOneUserQuery?.error?.response?.data?.msg}`} </Text>
+    </View>;
+  }
+
+  const initialState = {
+    _id: readOneUserQuery.data.results.user._id,
+    firstName: readOneUserQuery.data.results.user.firstName,
+    middleName: readOneUserQuery.data.results.user.middleName,
+    lastName: readOneUserQuery.data.results.user.lastName,
+    address: readOneUserQuery.data.results.user.address,
+    phoneNumber: readOneUserQuery.data.results.user.phoneNumber,
+    bankName: readOneUserQuery.data.results.user.bankName,
+    accountNumber: readOneUserQuery.data.results.user.accountNumber,
+    pinCode: readOneUserQuery.data.results.user.accountNumber,
   };
 
   // Query Client
   const queryClient = useQueryClient();
-  // User Mutation
-  const createUserMuation = useMutation({
-    mutationFn: createUser,
+  const updateUserMutaion = useMutation({
+    mutationFn: updateUser,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["users"] });
+      queryClient.invalidateQueries({ queryKey: ["userData", userId] });
       navigation.goBack();
       toast.show({
         placement: "top",
         render: ({ id }) => {
           const toastDetils = {
             title: "Success",
-            description: "New user has been added!",
+            description: "User updated!",
             variant: "left-accent",
             isClosable: true,
             status: "success",
           };
-          return <Toast id={id} {...toastDetils} />;
+          return <ToastPopper id={id} {...toastDetils} />;
         },
       });
     },
-    onError: (err: any) => {
-      console.warn(err.response.data.msg);
-    },
   });
-  // Submit Data
-  const handleSubmit = (values: any) => {
-    const formData: any = new FormData();
-    for (let key in values) {
-      formData.append(key, values[key]);
-    }
-    if (selectedImage) {
-      const { uri } = selectedImage.assets[0];
-      formData.append("image", {
-        uri,
-        name: uri.split("/").splice(-1)[0],
-        type: "image/jpeg",
-      });
-    }
-    createUserMuation.mutate(formData);
+  const handleSubmit = (updateData: any) => {
+    updateUserMutaion.mutate(updateData);
   };
 
   return (
-    <ScrollView w="100%">
-      <Box px={3} py={5}>
-        <Stack space={3} w="100%" maxW="400">
-          {createUserMuation.isError && (
-            <Alert w="100%" status={"error"}>
-              <VStack space={2} flexShrink={1} w="100%">
-                <HStack flexShrink={1} space={2} justifyContent="space-between">
-                  <HStack space={2} flexShrink={1}>
-                    <Alert.Icon mt="1" />
-                    <Text fontSize="md" color="coolGray.800">
-                      {createUserMuation?.error?.response?.data?.msg}
-                    </Text>
-                  </HStack>
-                  <IconButton
-                    onPress={createUserMuation.reset}
-                    variant="unstyled"
-                    _focus={{
-                      borderWidth: 0,
-                    }}
-                    icon={<CloseIcon size="3" />}
-                    _icon={{
-                      color: "coolGray.600",
-                    }}
-                  />
+    <ScrollView>
+      <Stack space={3} w="100%" maxW="400">
+        {updateUserMutaion.isError && (
+          <Alert w="100%" status={"error"}>
+            <VStack space={2} flexShrink={1} w="100%">
+              <HStack flexShrink={1} space={2} justifyContent="space-between">
+                <HStack space={2} flexShrink={1}>
+                  <Alert.Icon mt="1" />
+                  <Text fontSize="md" color="coolGray.800">
+                    {updateUserMutaion?.error?.response?.data?.msg}
+                  </Text>
                 </HStack>
-              </VStack>
-            </Alert>
-          )}
-        </Stack>
+                <IconButton
+                  onPress={updateUserMutaion.reset}
+                  variant="unstyled"
+                  _focus={{
+                    borderWidth: 0,
+                  }}
+                  icon={<CloseIcon size="3" />}
+                  _icon={{
+                    color: "coolGray.600",
+                  }}
+                />
+              </HStack>
+            </VStack>
+          </Alert>
+        )}
+      </Stack>
 
-        <TouchableOpacity onPress={pickImageAsync}>
-          <Box my={2}>
-            <ImageViewer
-              placeholderImageSource={"Select Image"}
-              selectedImage={selectedImage}
-            />
-          </Box>
-        </TouchableOpacity>
-        <Formik
-          initialValues={initialState}
-          validationSchema={userValidationSchema}
-          onSubmit={handleSubmit}
-        >
+      <Box px={3} py={5}>
+        <Formik initialValues={initialState} onSubmit={handleSubmit}>
           {({
             handleChange,
             handleBlur,
@@ -295,7 +278,7 @@ const AddUser = () => {
                       placeholder="Enter account/card #"
                       onChangeText={handleChange("accountNumber")}
                       onBlur={handleBlur("accountNumber")}
-                      value={values.accountNumber}
+                      value={values.accountNumber.toString()}
                     />
                     {errors.accountNumber && touched.accountNumber && (
                       <FormControl.ErrorMessage
@@ -316,7 +299,7 @@ const AddUser = () => {
                       placeholder="Enter pin code"
                       onChangeText={handleChange("pinCode")}
                       onBlur={handleBlur("pinCode")}
-                      value={values.pinCode}
+                      value={values.pinCode.toString()}
                     />
                     {errors.pinCode && touched.pinCode && (
                       <FormControl.ErrorMessage
@@ -329,7 +312,7 @@ const AddUser = () => {
 
                   <Button
                     backgroundColor="#1D3B80"
-                    isLoading={createUserMuation.isLoading}
+                    isLoading={updateUserMutaion.isLoading}
                     spinnerPlacement="end"
                     shadow={2}
                     onPress={() => {
@@ -348,4 +331,4 @@ const AddUser = () => {
   );
 };
 
-export default AddUser;
+export default EditUser;
