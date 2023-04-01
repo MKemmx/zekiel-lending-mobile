@@ -3,4 +3,5 @@ export interface ICreditLedger {
   status: string;
   amount: number;
   description?: string;
+  createdAt: any;
 }

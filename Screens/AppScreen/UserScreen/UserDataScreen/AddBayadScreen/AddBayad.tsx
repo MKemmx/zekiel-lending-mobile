@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik } from "formik";
 import {
   FormControl,
@@ -10,15 +10,27 @@ import {
   Box,
   TextArea,
   useToast,
+  Text,
 } from "native-base";
+import { TouchableOpacity } from "react-native";
+
+// React navigation
 import { useNavigation } from "@react-navigation/native";
+
+// React Query
 import { useMutation, useQueryClient } from "react-query";
+
+// Date Picker
+import dayjs from "dayjs";
+import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 
 // Alert Popper
 import ToastPopper from "../../../../../helpers/ToastPopper";
+
 // Validaion Schema
 import { addBayadValidationSchema } from "./AddBayadValidationSchema";
 import { addBayadInitialState } from "./initalState";
+
 // API Service
 import { createBayad } from "../../../../../services/userData";
 
@@ -64,9 +76,28 @@ const AddBayad = ({ route }: { route: any }) => {
     },
   });
 
+  // Add Custom Date
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const handleDateChange = (e: any, date: any) => {
+    setSelectedDate(date);
+  };
+  const handleOpenDate = () => {
+    DateTimePickerAndroid.open({
+      value: selectedDate,
+      onChange: handleDateChange,
+      mode: "date",
+      is24Hour: false,
+    });
+  };
+
   // Submit Form
   const handleSubmit = (values: any) => {
-    userDataMutation.mutate(values);
+    const mergedData = {
+      ...values,
+      createdAt: selectedDate,
+    };
+
+    userDataMutation.mutate(mergedData);
   };
 
   return (
@@ -121,6 +152,27 @@ const AddBayad = ({ route }: { route: any }) => {
                     value={values.description}
                   />
                 </FormControl>
+
+                <Box
+                  py={2}
+                  display="flex"
+                  flexDirection="row"
+                  alignItems="center"
+                >
+                  <Text> Select Bayad Date: </Text>
+
+                  <Box
+                    borderColor="gray.300"
+                    borderWidth="1"
+                    px={2}
+                    py={1}
+                    ml={2}
+                  >
+                    <TouchableOpacity onPress={handleOpenDate}>
+                      <Text> {dayjs(selectedDate).format("MM/DD/YYYY")} </Text>
+                    </TouchableOpacity>
+                  </Box>
+                </Box>
 
                 <Button
                   isLoading={userDataMutation.isLoading}

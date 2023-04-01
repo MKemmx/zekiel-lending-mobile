@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Text,
@@ -10,6 +10,8 @@ import {
   Stack,
   ScrollView,
 } from "native-base";
+import { TouchableOpacity } from "react-native";
+
 import { RefreshControl } from "react-native";
 import { SwipeListView } from "react-native-swipe-list-view";
 import { useNavigation } from "@react-navigation/native";
@@ -22,24 +24,45 @@ import Nodata from "../../../../components/NoData";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 dayjs.extend(localizedFormat);
+
+// Date Picker
+import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
+import { AntDesign } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+
 // React Query
 import { useQuery } from "react-query";
 // Services
 import { readOneUser } from "../../../../services/user";
 
 const UserData = ({ route }: { route: any }) => {
-  const { userId } = route.params;
   const navigation = useNavigation();
+  const { userId } = route.params;
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
   const { isLoading, isError, data, isFetching, refetch } = useQuery({
-    queryKey: ["userData", userId],
-    queryFn: () => readOneUser(userId),
+    queryKey: ["userData", userId, selectedDate],
+    queryFn: () => readOneUser(userId, selectedDate),
   });
 
   const handleRefresh = React.useCallback(() => {
     refetch();
   }, [refetch]);
 
+  // Main Data
   const userCredits = data?.results?.userCredits;
+
+  const handleDateChange = (e: any, date: any) => {
+    setSelectedDate(date);
+  };
+  const handleOpenDate = () => {
+    DateTimePickerAndroid.open({
+      value: selectedDate,
+      onChange: handleDateChange,
+      mode: "date",
+      is24Hour: false,
+    });
+  };
 
   if (isLoading) {
     return (
@@ -197,8 +220,42 @@ const UserData = ({ route }: { route: any }) => {
         </Box>
       </Box>
 
-      {userCredits.length <= 0 && (
+      <Box
+        px={5}
+        flexDir={"row"}
+        justifyContent="space-between"
+        alignItems="center"
+      >
         <Box>
+          <Text>Selected Date:</Text>
+          <Text bold fontSize="sm">
+            {dayjs(selectedDate).format("MM/DD/YYYY")}
+          </Text>
+        </Box>
+
+        <Box mt={2} flexDir={"row"}>
+          <TouchableOpacity onPress={handleOpenDate}>
+            <Box alignItems="center">
+              <AntDesign name="calendar" size={24} color="black" />
+            </Box>
+            <Text> Select Date </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              setSelectedDate(new Date());
+            }}
+          >
+            <Box alignItems="center">
+              <MaterialIcons name="clear" size={24} color="black" />
+            </Box>
+            <Text> Reset </Text>
+          </TouchableOpacity>
+        </Box>
+      </Box>
+
+      {userCredits.length <= 0 && (
+        <Box mt={2}>
           <Nodata />
         </Box>
       )}

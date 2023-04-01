@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik } from "formik";
 import {
   FormControl,
@@ -9,9 +9,20 @@ import {
   WarningOutlineIcon,
   Box,
   TextArea,
+  Text,
 } from "native-base";
+import { TouchableOpacity } from "react-native";
+
+// React Navigation
 import { useNavigation } from "@react-navigation/native";
+
+// React Query
 import { useMutation, useQueryClient } from "react-query";
+
+// Date Picker
+import dayjs from "dayjs";
+import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
+
 // API Service
 import { createUtang } from "../../../../../services/userData";
 import { addUtangValidationSchema } from "./AddUtangValidationSchema";
@@ -32,9 +43,27 @@ const AddUtang = ({ route }: { route: any }) => {
     },
   });
 
+  // Add Custom Date
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const handleDateChange = (e: any, date: any) => {
+    setSelectedDate(date);
+  };
+  const handleOpenDate = () => {
+    DateTimePickerAndroid.open({
+      value: selectedDate,
+      onChange: handleDateChange,
+      mode: "date",
+      is24Hour: false,
+    });
+  };
+
   // Submit Form
   const handleSubmit = (values: any) => {
-    createUserDataLedger.mutate(values);
+    const mergedData = {
+      ...values,
+      createdAt: selectedDate,
+    };
+    createUserDataLedger.mutate(mergedData);
   };
 
   return (
@@ -90,6 +119,27 @@ const AddUtang = ({ route }: { route: any }) => {
                     value={values.description}
                   />
                 </FormControl>
+
+                <Box
+                  py={2}
+                  display="flex"
+                  flexDirection="row"
+                  alignItems="center"
+                >
+                  <Text> Select Utang Date: </Text>
+
+                  <Box
+                    borderColor="gray.300"
+                    borderWidth="1"
+                    px={2}
+                    py={1}
+                    ml={2}
+                  >
+                    <TouchableOpacity onPress={handleOpenDate}>
+                      <Text> {dayjs(selectedDate).format("MM/DD/YYYY")} </Text>
+                    </TouchableOpacity>
+                  </Box>
+                </Box>
 
                 <Button
                   isLoading={createUserDataLedger.isLoading}

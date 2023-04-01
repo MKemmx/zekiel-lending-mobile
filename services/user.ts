@@ -34,14 +34,17 @@ export const readUser = async (page: number, searchText: string) => {
   return data;
 };
 
-export const readOneUser = async (userId: any) => {
+export const readOneUser = async (userId: any, selectedDate: any) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
       "auth-token": useLoginStore.getState().token,
     },
   };
-  const { data } = await userApi.get(`/${userId}`, config);
+  const { data } = await userApi.get(
+    `/${userId}?selectedDate=${selectedDate}`,
+    config
+  );
   return data;
 };
 
