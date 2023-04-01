@@ -143,11 +143,14 @@ const CreditItem = () => {
                       >
                         <HStack space={[2, 3]} justifyContent="space-between">
                           <Avatar
+                            background="gray.500"
                             size="50px"
-                            source={{
-                              uri: "http://demo.solwininfotech.com/wordpress/probit/wp-content/uploads/2015/12/Rick-Kelly.jpg",
-                            }}
-                          />
+                            // source={{
+                            //   uri: data?.results?.user?.image?.url,
+                            // }}
+                          >
+                            {`${item?.user?.firstName[0]} ${item.user?.lastName[0]}`}
+                          </Avatar>
                           <VStack alignSelf="center">
                             <Text fontSize="sm" color="coolGray.800" bold>
                               {`${item?.user?.firstName} ${item.user?.lastName}`}

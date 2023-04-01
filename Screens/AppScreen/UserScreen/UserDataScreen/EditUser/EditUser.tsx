@@ -29,41 +29,18 @@ import { readOneUser, updateUser } from "../../../../../services/user";
 import ToastPopper from "../../../../../helpers/ToastPopper";
 
 const EditUser = ({ route }: { route: any }) => {
-  const toast = useToast();
+  // Query Client and Navigation
+  const queryClient = useQueryClient();
   const navigation = useNavigation();
+  // Toast
+  const toast = useToast();
   const { userId } = route.params;
+
   const readOneUserQuery = useQuery({
     queryKey: ["userData", userId],
     queryFn: () => readOneUser(userId),
   });
 
-  if (readOneUserQuery.isLoading) {
-    <View>
-      <Text>Loading...</Text>
-    </View>;
-  }
-
-  if (readOneUserQuery.isError) {
-    <View>
-      <Text>Error</Text>
-      <Text> {`${readOneUserQuery?.error?.response?.data?.msg}`} </Text>
-    </View>;
-  }
-
-  const initialState = {
-    _id: readOneUserQuery.data.results.user?._id,
-    firstName: readOneUserQuery.data.results.user?.firstName,
-    middleName: readOneUserQuery.data.results.user?.middleName,
-    lastName: readOneUserQuery.data.results.user?.lastName,
-    address: readOneUserQuery.data.results.user?.address,
-    phoneNumber: readOneUserQuery.data.results.user?.phoneNumber,
-    bankName: readOneUserQuery.data.results.user?.bankName,
-    accountNumber: readOneUserQuery.data.results.user?.accountNumber,
-    pinCode: readOneUserQuery.data.results.user?.accountNumber,
-  };
-
-  // Query Client
-  const queryClient = useQueryClient();
   const updateUserMutaion = useMutation({
     mutationFn: updateUser,
     onSuccess: () => {
@@ -84,8 +61,38 @@ const EditUser = ({ route }: { route: any }) => {
       });
     },
   });
+
+  if (readOneUserQuery.isLoading) {
+    return (
+      <View width="100%" alignItems="center" py="12">
+        <Text fontSize="lg">Loading...</Text>
+      </View>
+    );
+  }
+
+  if (readOneUserQuery.isError) {
+    return (
+      <View>
+        <Text>Error</Text>
+        <Text> {`${readOneUserQuery?.error?.response?.data?.msg}`} </Text>
+      </View>
+    );
+  }
+
   const handleSubmit = (updateData: any) => {
     updateUserMutaion.mutate(updateData);
+  };
+
+  const initialState = {
+    _id: readOneUserQuery?.data?.results?.user?._id,
+    firstName: readOneUserQuery?.data?.results?.user?.firstName,
+    middleName: readOneUserQuery?.data?.results?.user?.middleName,
+    lastName: readOneUserQuery?.data?.results?.user?.lastName,
+    address: readOneUserQuery?.data?.results?.user?.address,
+    phoneNumber: readOneUserQuery?.data?.results?.user?.phoneNumber,
+    bankName: readOneUserQuery?.data?.results?.user?.bankName,
+    accountNumber: readOneUserQuery?.data?.results?.user?.accountNumber,
+    pinCode: readOneUserQuery?.data?.results?.user?.pinCode,
   };
 
   return (

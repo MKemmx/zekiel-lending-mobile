@@ -35,6 +35,8 @@ export const readUser = async (page: number, searchText: string) => {
 };
 
 export const readOneUser = async (userId: any, selectedDate: any) => {
+  const valueDate = selectedDate === undefined ? new Date() : selectedDate;
+
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -42,7 +44,7 @@ export const readOneUser = async (userId: any, selectedDate: any) => {
     },
   };
   const { data } = await userApi.get(
-    `/${userId}?selectedDate=${selectedDate}`,
+    `/${userId}?selectedDate=${valueDate}`,
     config
   );
   return data;
