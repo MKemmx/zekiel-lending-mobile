@@ -20,19 +20,20 @@ import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 // Formik
 import { Formik } from "formik";
-import * as ImagePicker from "expo-image-picker";
-// React Query
+// React Query and Services
 import { useMutation, useQueryClient } from "react-query";
-// Services
-import { createUser } from "../../../../services/user";
+import { createUser } from "services/user";
 // Toast Component
-import Toast from "../../../../helpers/ToastPopper";
+import * as ImagePicker from "expo-image-picker";
 import ImageViewer from "./ImageViewer";
+import Toast from "helpers/ToastPopper";
+
 // Vilidation Schema
 import { userValidationSchema } from "./UserValidationShema";
 import { initialState } from "./InitialState";
 
 const AddUser = () => {
+  const queryClient = useQueryClient();
   const toast = useToast();
   const navigation = useNavigation();
 
@@ -50,8 +51,6 @@ const AddUser = () => {
     }
   };
 
-  // Query Client
-  const queryClient = useQueryClient();
   // User Mutation
   const createUserMuation = useMutation({
     mutationFn: createUser,
@@ -291,7 +290,6 @@ const AddUser = () => {
                     </FormControl.Label>
                     <Input
                       size="lg"
-                      keyboardType="numeric"
                       placeholder="Enter account/card #"
                       onChangeText={handleChange("accountNumber")}
                       onBlur={handleBlur("accountNumber")}
@@ -312,7 +310,6 @@ const AddUser = () => {
                     <FormControl.Label> Pin Code </FormControl.Label>
                     <Input
                       size="lg"
-                      keyboardType="numeric"
                       placeholder="Enter pin code"
                       onChangeText={handleChange("pinCode")}
                       onBlur={handleBlur("pinCode")}

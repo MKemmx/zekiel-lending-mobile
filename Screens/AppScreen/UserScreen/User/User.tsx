@@ -1,8 +1,8 @@
 import React from "react";
 // Nativebase
 import { Fab, Icon, Box } from "native-base";
-// Icons
 import { AntDesign } from "@expo/vector-icons";
+
 // Components
 import UserItem from "./Children/UserItem";
 

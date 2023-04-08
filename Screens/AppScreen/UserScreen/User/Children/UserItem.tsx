@@ -13,21 +13,16 @@ import {
 } from "native-base";
 import { RefreshControl, TouchableOpacity, ScrollView } from "react-native";
 import { SwipeListView } from "react-native-swipe-list-view";
-
 // Icons
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
-
-// React Query
-import { useInfiniteQuery } from "react-query";
 import { useDebounce } from "use-debounce";
-
 // Components
-import ListLoader from "../../../../../components/ListLoader";
-import NoData from "../../../../../components/NoData";
+import ListLoader from "components/ListLoader";
+import NoData from "components/NoData";
 import PrintButton from "./PrintButton";
-
-// Services
-import { readUser } from "../../../../../services/user";
+// React Query and Services
+import { useInfiniteQuery } from "react-query";
+import { readUser } from "services/user";
 
 // Get QueryClient from the context
 const UserItem = ({ navigation }: { navigation: any }) => {
@@ -143,12 +138,17 @@ const UserItem = ({ navigation }: { navigation: any }) => {
                     >
                       <HStack space={[3, 3]} justifyContent="space-between">
                         <Avatar
+                          background="gray.500"
                           alignSelf="center"
                           size="50px"
                           source={{
                             uri: item?.image?.url,
                           }}
-                        />
+                        >
+                          <Text fontSize="sm" color="coolGray.100" bold>
+                            {`${item?.firstName[0]} ${item?.lastName[0]}`}
+                          </Text>
+                        </Avatar>
                         <VStack alignSelf="center">
                           <Text color="coolGray.800" bold>
                             {`${item?.firstName} ${item?.middleName} ${item?.lastName} `}
@@ -192,8 +192,12 @@ const UserItem = ({ navigation }: { navigation: any }) => {
                 renderHiddenItem={(rowData, rowMap) => {
                   const userId = rowData.item._id;
                   return (
-                    <Box p={2} overflow={"hidden"} px={0} mb={5}>
-                      <HStack space={[0, 0]} justifyContent="space-between">
+                    <Box p={2} overflow={"hidden"} px={0}>
+                      <HStack
+                        space={[0, 0]}
+                        justifyContent="space-between"
+                        alignItems="center"
+                      >
                         <Spacer />
                         <PrintButton rowData={rowData} />
 
@@ -206,10 +210,11 @@ const UserItem = ({ navigation }: { navigation: any }) => {
                           }}
                         >
                           <View
-                            px={6}
+                            mr={1}
+                            px={3}
                             style={{
                               backgroundColor: "gray",
-                              height: "100%",
+                              height: "80%",
                               justifyContent: "center",
                             }}
                           >
@@ -218,12 +223,34 @@ const UserItem = ({ navigation }: { navigation: any }) => {
                             </Text>
                           </View>
                         </TouchableOpacity>
+
+                        <TouchableOpacity
+                          onPress={() => {
+                            navigation.navigate("User Interest Stack", {
+                              screen: "Interest Data",
+                              params: { userId },
+                            });
+                          }}
+                        >
+                          <View
+                            px={3}
+                            style={{
+                              backgroundColor: "green",
+                              height: "80%",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <Text color="white" fontSize="xs">
+                              Interest
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
                       </HStack>
                     </Box>
                   );
                 }}
                 leftOpenValue={-1}
-                rightOpenValue={-160}
+                rightOpenValue={-200}
                 onRowOpen={(rowKey, rowMap) => {
                   setTimeout(() => {
                     if (rowMap[rowKey]) {

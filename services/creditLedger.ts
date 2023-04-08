@@ -5,7 +5,7 @@ import { baseURL } from "./baseURL";
 export const creditLedgerAPI = axios.create({
   baseURL: `${baseURL}/creditLedger`,
 });
-import { useLoginStore } from "../store/loginStore";
+import { useLoginStore } from "store/loginStore";
 
 export const createCreditLedger = async (item: any) => {
   const config = {

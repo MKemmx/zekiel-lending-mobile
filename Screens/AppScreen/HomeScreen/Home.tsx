@@ -1,26 +1,25 @@
 import React, { useState, useCallback } from "react";
 
+import { FontAwesome } from "@expo/vector-icons";
+
 // Nativabase
 import { ScrollView, Text, Box, Image } from "native-base";
-import { StyleSheet, RefreshControl } from "react-native";
-import HomeHeader from "./HomeHeader";
+import { StyleSheet, RefreshControl, TouchableOpacity } from "react-native";
 
-// Components
+// React Query and Servies
+import { useQuery } from "react-query";
+import { readDashboard } from "services/dashboard";
+
+// Components and Loader
 import RecentUsers from "./Children/RecentUsers";
 import RecentLedger from "./Children/RecentLedger";
-
-// React Query
-import { useQuery } from "react-query";
-
-// Services
-import { readDashboard } from "../../../services/dashboard";
-
-// Loading Skeleton
+import HomeHeader from "./HomeHeader";
 import HomeSkeleton from "./HomeSkeleton";
 
-// Images
-import usersImage from "../../../assets/DashboardImages/users.png";
-import ledgersImage from "../../../assets/DashboardImages/ledger.png";
+// Dashboard Images
+import usersImage from "assets/DashboardImages/users.png";
+import ledgersImage from "assets/DashboardImages/ledger.png";
+import interestImage from "assets/DashboardImages/interest.png";
 
 const Home = () => {
   const {
@@ -30,6 +29,7 @@ const Home = () => {
     refetch,
   } = useQuery("dashboard", readDashboard);
 
+  const [isShownIntrest, setIsShownInterest] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -55,6 +55,49 @@ const Home = () => {
       flex={1}
     >
       <HomeHeader />
+
+      <Box
+        borderWidth="1"
+        borderColor="gray.200"
+        mt="7"
+        w="94%"
+        mx="auto"
+        backgroundColor="white"
+        flexDir={"row"}
+        py={5}
+        px={4}
+        gap={5}
+        rounded={"md"}
+      >
+        <Image source={interestImage} alt="Users" size="md" mb="2" />
+        <Box justifyContent="center">
+          <Text fontSize="lg" mb={0} bold>
+            Total Interest
+          </Text>
+          <Text fontSize="md" bold>
+            {isShownIntrest ? (
+              <>
+                {"\u20B1"}
+                {dashboardData?.totalInterest.toLocaleString("en-US")}
+              </>
+            ) : (
+              <>******</>
+            )}
+          </Text>
+        </Box>
+
+        <Box ml="auto" w="auto" alignItems="center" justifyContent="center">
+          <TouchableOpacity onPress={() => setIsShownInterest(!isShownIntrest)}>
+            <Box p={2}>
+              {isShownIntrest ? (
+                <FontAwesome name="eye" size={24} color="black" />
+              ) : (
+                <FontAwesome name="eye-slash" size={24} color="black" />
+              )}
+            </Box>
+          </TouchableOpacity>
+        </Box>
+      </Box>
 
       <Box
         mt="7"

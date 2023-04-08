@@ -16,17 +16,15 @@ import {
   CloseIcon,
   useToast,
 } from "native-base";
-
-// React Query
-import { useQuery, useMutation, useQueryClient } from "react-query";
 // React navigation
 import { useNavigation } from "@react-navigation/native";
 // Formik
 import { Formik } from "formik";
-
-// Services
-import { readOneUser, updateUser } from "../../../../../services/user";
-import ToastPopper from "../../../../../helpers/ToastPopper";
+// React Query and Services
+import { useQuery, useMutation, useQueryClient } from "react-query";
+import { readOneUser, updateUser } from "services/user";
+// Toast
+import ToastPopper from "helpers/ToastPopper";
 
 const EditUser = ({ route }: { route: any }) => {
   // Query Client and Navigation

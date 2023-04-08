@@ -1,7 +1,6 @@
 import React from "react";
-
-import { TouchableOpacity } from "react-native";
 import { Box, Text } from "native-base";
+import { TouchableOpacity } from "react-native";
 
 import * as Print from "expo-print";
 import { shareAsync } from "expo-sharing";
@@ -86,12 +85,12 @@ const PrintButton: React.FC<any> = ({ rowData }) => {
     <TouchableOpacity onPress={printToFile}>
       <Box
         mr={1}
+        px={3}
         justifyContent={"center"}
         alignSelf="center"
-        px={6}
         style={{
           backgroundColor: "#1D3B80",
-          height: "100%",
+          height: "80%",
           justifyContent: "center",
         }}
       >

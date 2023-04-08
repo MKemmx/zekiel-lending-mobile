@@ -1,5 +1,4 @@
 import React from "react";
-
 import { Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
@@ -11,9 +10,8 @@ import {
   Image,
   Button,
 } from "native-base";
-
 // Login State
-import { useLoginStore } from "../../store/loginStore";
+import { useLoginStore } from "store/loginStore";
 
 const Settings = () => {
   const { user, logOut } = useLoginStore((state) => state);

@@ -7,29 +7,26 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-// Auth Screens
-import Login from "./Screens/AuthScreen/Login/Login";
-import Register from "./Screens/AuthScreen/RegisterScreen/Register";
-
-// APP Screens
-import HomeScreen from "./Screens/AppScreen/HomeScreen/Home";
-import SettingsScreen from "./Screens/AppScreen/Settings";
-
-// Stack Credit
-import CreditStackScreen from "./Screens/AppScreen/CreditScreen/CreditStack";
-
-// Stack User
-import UserStackScreen from "./Screens/AppScreen/UserScreen/UserStack";
-
-// Login States
-import { useLoginStore } from "./store/loginStore";
-
 // Icons
 import { Ionicons, AntDesign, FontAwesome } from "@expo/vector-icons";
 
+// Auth Screens
+import Login from "screens/AuthScreen/Login/Login";
+import Register from "screens/AuthScreen/RegisterScreen/Register";
+
+// APP Screens
+import HomeScreen from "screens/AppScreen/HomeScreen/Home";
+import SettingsScreen from "screens/AppScreen/Settings";
+
+// Stack Credit
+import CreditStackScreen from "screens/AppScreen/CreditScreen/CreditStack";
+// Stack User
+import UserStackScreen from "screens/AppScreen/UserScreen/UserStack";
+// Login States
+import { useLoginStore } from "store/loginStore";
+
 // React Query
 import { QueryClient, QueryClientProvider } from "react-query";
-
 // Define the config
 const config = {
   useSystemColorMode: false,
@@ -47,8 +44,8 @@ declare module "native-base" {
 const AuthStack = createNativeStackNavigator();
 const FooterTab = createBottomTabNavigator();
 
+// Init Query Client
 const queryClient = new QueryClient();
-
 export default function App() {
   const { isAuthenticated } = useLoginStore((state: any) => state);
 

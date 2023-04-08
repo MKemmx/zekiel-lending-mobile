@@ -10,15 +10,17 @@ import {
   Stack,
   ScrollView,
 } from "native-base";
-import { TouchableOpacity } from "react-native";
 
-import { RefreshControl } from "react-native";
+// React native
+import { TouchableOpacity, RefreshControl } from "react-native";
+
 import { SwipeListView } from "react-native-swipe-list-view";
 import { useNavigation } from "@react-navigation/native";
+
 // Components
 import SwiperUser from "./SwiperUser";
 import Loading from "./Loading";
-import Nodata from "../../../../components/NoData";
+import Nodata from "components/NoData";
 
 // Day JS
 import dayjs from "dayjs";
@@ -30,10 +32,9 @@ import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 
-// React Query
+// React Query and Services
 import { useQuery } from "react-query";
-// Services
-import { readOneUser } from "../../../../services/user";
+import { readOneUser } from "services/user";
 
 const UserData = ({ route }: { route: any }) => {
   const navigation = useNavigation();
@@ -51,7 +52,6 @@ const UserData = ({ route }: { route: any }) => {
 
   // Main Data
   const userCredits = data?.results?.userCredits;
-
   const handleDateChange = (e: any, date: any) => {
     setSelectedDate(date);
   };
@@ -101,7 +101,12 @@ const UserData = ({ route }: { route: any }) => {
                 source={{
                   uri: data?.results?.user?.image?.url,
                 }}
-              />
+              >
+                <Text color="#FFF" fontSize="3xl">
+                  {data?.results?.user?.firstName[0]}
+                  {data?.results?.user?.lastName[0]}
+                </Text>
+              </Avatar>
             </Box>
 
             <Box rounded={5} backgroundColor="white" w="70%">
@@ -109,7 +114,7 @@ const UserData = ({ route }: { route: any }) => {
                 <Box w="50%" py={2}>
                   <Text color="muted.700" textAlign="center" bold>
                     {"\u20B1"}
-                    {data?.results?.totalUtang}
+                    {data?.results?.totalUtang.toLocaleString("en-US")}
                   </Text>
                   <Text color="muted.700" textAlign="center">
                     Total Utang
@@ -119,7 +124,7 @@ const UserData = ({ route }: { route: any }) => {
                 <Box w="50%" py={2}>
                   <Text color="success.700" textAlign="center" bold>
                     {"\u20B1"}
-                    {data?.results?.totalBayad}
+                    {data?.results?.totalBayad.toLocaleString("en-US")}
                   </Text>
                   <Text color="muted.700" textAlign="center">
                     Total Bayad
@@ -136,7 +141,7 @@ const UserData = ({ route }: { route: any }) => {
               >
                 <Text color="danger.700" textAlign="center" bold>
                   {"\u20B1"}
-                  {data?.results?.totalBalance}
+                  {data?.results?.totalBalance.toLocaleString("en-US")}
                 </Text>
                 <Text textAlign="center"> Balance </Text>
               </Box>
@@ -304,7 +309,7 @@ const UserData = ({ route }: { route: any }) => {
                     >
                       {item?.status === "bayad" ? "+" : "-"}
                       {"\u20B1"}
-                      {item?.amount}
+                      {item?.amount.toLocaleString("en-US")}
                     </Text>
                   </Box>
                 </HStack>

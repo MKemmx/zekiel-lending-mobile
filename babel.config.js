@@ -9,6 +9,21 @@ module.exports = function (api) {
           relativeSourceLocation: true,
         },
       ],
+      [
+        "module-resolver",
+        {
+          root: ["./src"],
+          alias: {
+            src: "./src",
+            services: "./services",
+            assets: "./assets",
+            store: "./store",
+            components: "./components",
+            helpers: "./helpers",
+            screens: "./Screens",
+          },
+        },
+      ],
     ],
   };
 };

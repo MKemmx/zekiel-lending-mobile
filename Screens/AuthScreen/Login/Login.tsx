@@ -1,5 +1,4 @@
 import React from "react";
-
 // Native Base
 import {
   FormControl,
@@ -18,27 +17,17 @@ import {
   Text,
   CloseIcon,
   IconButton,
-  Flex,
 } from "native-base";
-
-// React Query
-import { useMutation } from "react-query";
-
-// Auth Store
-import { useLoginStore } from "../../../store/loginStore";
-
 // Image
-import logo from "../../../assets/newLogo.png";
-
+import logo from "assets/newLogo.png";
 // Form
 import { Formik } from "formik";
 import { loginValidationSchema } from "./loginValidation";
-
-import Toast from "../../../helpers/ToastPopper";
-
-// Services
-import { loginService } from "../../../services/login";
-
+//  React Query Services
+import { useMutation } from "react-query";
+import { loginService } from "services/login";
+// Auth Store
+import { useLoginStore } from "store/loginStore";
 // Initial State
 import { INITIAL_STATE } from "./initialState";
 
@@ -82,7 +71,7 @@ const Login = ({ navigation }: { navigation: any }) => {
             </Heading>
           </Box>
 
-          {loginMutation.isError && (
+          {loginMutation?.isError && (
             <Alert mb={3} w="100%" status={"error"}>
               <VStack
                 flexDirection="row"

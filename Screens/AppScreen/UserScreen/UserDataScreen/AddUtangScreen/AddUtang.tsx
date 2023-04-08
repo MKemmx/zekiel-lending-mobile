@@ -12,19 +12,14 @@ import {
   Text,
 } from "native-base";
 import { TouchableOpacity } from "react-native";
-
 // React Navigation
 import { useNavigation } from "@react-navigation/native";
-
-// React Query
-import { useMutation, useQueryClient } from "react-query";
-
 // Date Picker
 import dayjs from "dayjs";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
-
-// API Service
-import { createUtang } from "../../../../../services/userData";
+//  React Query and  API Service
+import { useMutation, useQueryClient } from "react-query";
+import { createUtang } from "services/userData";
 import { addUtangValidationSchema } from "./AddUtangValidationSchema";
 import { addBayadInitialState } from "./initalState";
 

@@ -1,7 +1,7 @@
 import React from "react";
 // React Native
 import { RefreshControl, ScrollView } from "react-native";
-
+// Nativebase
 import {
   VStack,
   Box,
@@ -14,23 +14,18 @@ import {
   Icon,
   Spinner,
 } from "native-base";
-
 // DayJS
 import dayjs from "dayjs";
-
 // Icons
 import { Ionicons } from "@expo/vector-icons";
-
 // React Query
 import { useInfiniteQuery } from "react-query";
 import { useDebounce } from "use-debounce";
-
 // Components
-import ListLoader from "../../../components/ListLoader";
-import NoData from "../../../components/NoData";
-
+import ListLoader from "components/ListLoader";
+import NoData from "components/NoData";
 // Services
-import { readCreditLedger } from "../../../services/creditLedger";
+import { readCreditLedger } from "services/creditLedger";
 
 // Get QueryClient from the context
 const CreditItem = () => {
@@ -142,13 +137,7 @@ const CreditItem = () => {
                         mb={4}
                       >
                         <HStack space={[2, 3]} justifyContent="space-between">
-                          <Avatar
-                            background="gray.500"
-                            size="50px"
-                            // source={{
-                            //   uri: data?.results?.user?.image?.url,
-                            // }}
-                          >
+                          <Avatar background="gray.500" size="50px">
                             {`${item?.user?.firstName[0]} ${item.user?.lastName[0]}`}
                           </Avatar>
                           <VStack alignSelf="center">
@@ -169,7 +158,7 @@ const CreditItem = () => {
                             >
                               {item?.status === "bayad" ? "+" : "-"}
                               {"\u20B1"}
-                              {item?.amount}
+                              {item?.amount.toLocaleString("en-US")}
                             </Text>
                           </Box>
                         </HStack>

@@ -19,7 +19,7 @@ import {
 // API Service
 import { useMutation } from "react-query";
 import { Formik } from "formik";
-import { registerAccount } from "../../../services/register";
+import { registerAccount } from "services/register";
 // Validations
 import { registerValidation } from "./registerValidation";
 

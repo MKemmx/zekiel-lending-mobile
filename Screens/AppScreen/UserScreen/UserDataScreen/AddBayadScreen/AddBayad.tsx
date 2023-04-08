@@ -13,26 +13,19 @@ import {
   Text,
 } from "native-base";
 import { TouchableOpacity } from "react-native";
-
 // React navigation
 import { useNavigation } from "@react-navigation/native";
-
-// React Query
-import { useMutation, useQueryClient } from "react-query";
-
 // Date Picker
 import dayjs from "dayjs";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
-
 // Alert Popper
-import ToastPopper from "../../../../../helpers/ToastPopper";
-
+import ToastPopper from "helpers/ToastPopper";
 // Validaion Schema
 import { addBayadValidationSchema } from "./AddBayadValidationSchema";
 import { addBayadInitialState } from "./initalState";
-
-// API Service
-import { createBayad } from "../../../../../services/userData";
+// React Query and API Service
+import { useMutation, useQueryClient } from "react-query";
+import { createBayad } from "services/userData";
 
 const AddBayad = ({ route }: { route: any }) => {
   const { userId } = route.params;
@@ -42,21 +35,21 @@ const AddBayad = ({ route }: { route: any }) => {
 
   const userDataMutation = useMutation(createBayad, {
     onSuccess: () => {
-      queryClient
-        .invalidateQueries("userData", userId)
-        .then(() => navigation.goBack());
-      toast.show({
-        placement: "top",
-        render: ({ id }) => {
-          const toastDetils = {
-            title: `Success`,
-            description: `Bayad was successfully saved`,
-            variant: "left-accent",
-            isClosable: true,
-            status: "success",
-          };
-          return <ToastPopper id={id} {...toastDetils} />;
-        },
+      queryClient.invalidateQueries("userData", userId).then(() => {
+        toast.show({
+          placement: "top",
+          render: ({ id }) => {
+            const toastDetils = {
+              title: `Success`,
+              description: `Bayad was successfully saved`,
+              variant: "left-accent",
+              isClosable: true,
+              status: "success",
+            };
+            return <ToastPopper id={id} {...toastDetils} />;
+          },
+        });
+        navigation.goBack();
       });
     },
     onError: (error: any) => {
@@ -96,7 +89,6 @@ const AddBayad = ({ route }: { route: any }) => {
       ...values,
       createdAt: selectedDate,
     };
-
     userDataMutation.mutate(mergedData);
   };
 

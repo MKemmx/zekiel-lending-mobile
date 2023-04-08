@@ -1,17 +1,15 @@
 import React from "react";
-// React navigation
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 // Icons
 import { AntDesign } from "@expo/vector-icons";
-
 // User Stack Component
 import UserData from "./UserData";
 import AddUtang from "./AddUtangScreen/AddUtang";
 import AddBayad from "./AddBayadScreen/AddBayad";
 import EditUser from "./EditUser/EditUser";
 
-// Intialize Stack
+// React navigation
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 const UserDataStack = createNativeStackNavigator();
 
 const UserStack = () => {

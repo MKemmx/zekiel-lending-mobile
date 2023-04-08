@@ -8,6 +8,7 @@ import AddUser from "./AddUser/AddUser";
 
 // Stacks
 import UserDataStack from "./UserDataScreen/UserDataStack";
+import UserInterestStack from "./UserInterest/UserInterestStack";
 
 // Intialize Stack
 const Stack = createNativeStackNavigator();
@@ -23,6 +24,13 @@ const UserStack = () => {
           headerShown: false,
         }}
         component={UserDataStack}
+      />
+      <Stack.Screen
+        name="User Interest Stack"
+        options={{
+          headerShown: false,
+        }}
+        component={UserInterestStack}
       />
     </Stack.Navigator>
   );

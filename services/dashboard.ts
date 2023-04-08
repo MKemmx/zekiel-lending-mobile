@@ -6,7 +6,7 @@ export const dashboardAPI = axios.create({
   baseURL: `${baseURL}/dashboard`,
 });
 
-import { useLoginStore } from "../store/loginStore";
+import { useLoginStore } from "store/loginStore";
 
 export const readDashboard = async () => {
   const config = {
